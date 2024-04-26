@@ -6,4 +6,39 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DatabaseContext\" />
+    <None Remove="Configuration\" />
+    <None Remove="Configuration\AddressAgg\" />
+    <None Remove="Configuration\CustomerAgg\" />
+    <None Remove="Configuration\ExpertAgg\" />
+    <None Remove="Configuration\FeebackAgg\" />
+    <None Remove="Configuration\RequestAgg\" />
+    <None Remove="Configuration\SkillServeAgg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DatabaseContext\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Configuration\AddressAgg\" />
+    <Folder Include="Configuration\CustomerAgg\" />
+    <Folder Include="Configuration\ExpertAgg\" />
+    <Folder Include="Configuration\FeebackAgg\" />
+    <Folder Include="Configuration\RequestAgg\" />
+    <Folder Include="Configuration\SkillServeAgg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
+  </ItemGroup>
 </Project>

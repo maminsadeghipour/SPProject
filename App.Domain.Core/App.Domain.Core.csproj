@@ -6,4 +6,34 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="CustomerAgg\" />
+    <None Remove="ExpertAgg\" />
+    <None Remove="SkillServeAgg\" />
+    <None Remove="RequestAgg\" />
+    <None Remove="CustomerAgg\Entity\" />
+    <None Remove="ExpertAgg\Entity\" />
+    <None Remove="RequestAgg\Entity\" />
+    <None Remove="SkillServeAgg\Entity\" />
+    <None Remove="RequestAgg\Enum\" />
+    <None Remove="AddressAgg\" />
+    <None Remove="AddressAgg\Entity\" />
+    <None Remove="FeedBackAgg\" />
+    <None Remove="FeedBackAgg\Entity\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CustomerAgg\" />
+    <Folder Include="ExpertAgg\" />
+    <Folder Include="SkillServeAgg\" />
+    <Folder Include="RequestAgg\" />
+    <Folder Include="CustomerAgg\Entity\" />
+    <Folder Include="ExpertAgg\Entity\" />
+    <Folder Include="RequestAgg\Entity\" />
+    <Folder Include="SkillServeAgg\Entity\" />
+    <Folder Include="RequestAgg\Enum\" />
+    <Folder Include="AddressAgg\" />
+    <Folder Include="AddressAgg\Entity\" />
+    <Folder Include="FeedBackAgg\" />
+    <Folder Include="FeedBackAgg\Entity\" />
+  </ItemGroup>
 </Project>
