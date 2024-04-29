@@ -8,7 +8,7 @@ namespace App.Domain.Core.AddressAgg.Contracts.AddressContract
 		void Add(Address address);
 		List<Address> GetAll();
 		Address GetById(int id);
-		void Uptade(Address address);
+		void Update(Address address);
 		void DeleteById(int id);
 
 	}

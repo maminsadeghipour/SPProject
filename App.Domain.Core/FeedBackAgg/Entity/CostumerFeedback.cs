@@ -14,7 +14,8 @@ namespace App.Domain.Core.FeedBackAgg.Entity
 
         public int Id { get; set; }
 		public string Description { get; set; }
-		public int Rate { get; set; }
+        //[AllowNull]
+        public int? Rate { get; set; }
 
         // Developing Entity 
         public DateTime CreatedAt { get; set; }

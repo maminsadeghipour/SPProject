@@ -34,7 +34,7 @@ namespace App.Infrastructure.Repository.AddressAgg
         public Address GetById(int id) => _context.Addresses.AsNoTracking().FirstOrDefault(a => a.Id == id);
         
 
-        public void Uptade(Address address)
+        public void Update(Address address)
         {
             var addressInDatabase = _context.Addresses.First(a => a.Id == address.Id);
 

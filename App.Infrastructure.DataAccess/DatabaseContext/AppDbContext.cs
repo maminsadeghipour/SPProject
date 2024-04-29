@@ -43,7 +43,7 @@ namespace App.Infrastructure.DataAccess.DatabaseContext
 
             base.OnModelCreating(modelBuilder);
         }
-
+        
         public DbSet<Address> Addresses { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Customer> Customers { get; set; }
