@@ -20,6 +20,21 @@
     <None Remove="AddressAgg\Entity\" />
     <None Remove="FeedBackAgg\" />
     <None Remove="FeedBackAgg\Entity\" />
+    <None Remove="AddressAgg\Contracts\" />
+    <None Remove="CustomerAgg\Contracts\" />
+    <None Remove="ExpertAgg\Contracts\" />
+    <None Remove="FeedBackAgg\Contracts\" />
+    <None Remove="RequestAgg\Contracts\" />
+    <None Remove="SkillServeAgg\Contracts\" />
+    <None Remove="AddressAgg\Contracts\CityContract\" />
+    <None Remove="AddressAgg\Contracts\AddressContract\" />
+    <None Remove="CustomerAgg\Contracts\CustomerContracts\" />
+    <None Remove="ExpertAgg\Contracts\ExpertContract\" />
+    <None Remove="RequestAgg\Contracts\BidContracts\" />
+    <None Remove="RequestAgg\Contracts\RequestPictureContracts\" />
+    <None Remove="RequestAgg\Contracts\RequestContracts\" />
+    <None Remove="SkillServeAgg\Contracts\SkillServeContracts\" />
+    <None Remove="SkillServeAgg\Contracts\SkillServeCategoryContracts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -35,5 +50,20 @@
     <Folder Include="AddressAgg\Entity\" />
     <Folder Include="FeedBackAgg\" />
     <Folder Include="FeedBackAgg\Entity\" />
+    <Folder Include="AddressAgg\Contracts\" />
+    <Folder Include="CustomerAgg\Contracts\" />
+    <Folder Include="ExpertAgg\Contracts\" />
+    <Folder Include="FeedBackAgg\Contracts\" />
+    <Folder Include="RequestAgg\Contracts\" />
+    <Folder Include="SkillServeAgg\Contracts\" />
+    <Folder Include="AddressAgg\Contracts\CityContract\" />
+    <Folder Include="AddressAgg\Contracts\AddressContract\" />
+    <Folder Include="CustomerAgg\Contracts\CustomerContracts\" />
+    <Folder Include="ExpertAgg\Contracts\ExpertContract\" />
+    <Folder Include="RequestAgg\Contracts\BidContracts\" />
+    <Folder Include="RequestAgg\Contracts\RequestPictureContracts\" />
+    <Folder Include="RequestAgg\Contracts\RequestContracts\" />
+    <Folder Include="SkillServeAgg\Contracts\SkillServeContracts\" />
+    <Folder Include="SkillServeAgg\Contracts\SkillServeCategoryContracts\" />
   </ItemGroup>
 </Project>

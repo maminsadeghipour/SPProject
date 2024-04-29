@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="AddressAgg\" />
+    <None Remove="CustomerAgg\" />
+    <None Remove="ExpertAgg\" />
+    <None Remove="FeebackAgg\" />
+    <None Remove="RequestAgg\" />
+    <None Remove="SkillServeAgg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AddressAgg\" />
+    <Folder Include="CustomerAgg\" />
+    <Folder Include="ExpertAgg\" />
+    <Folder Include="FeebackAgg\" />
+    <Folder Include="RequestAgg\" />
+    <Folder Include="SkillServeAgg\" />
+  </ItemGroup>
 </Project>
