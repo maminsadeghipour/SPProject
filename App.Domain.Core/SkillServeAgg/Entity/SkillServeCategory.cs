@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace App.Domain.Core.SkillServeAgg.Entity
 {
 	public class SkillServeCategory
@@ -12,8 +14,11 @@ namespace App.Domain.Core.SkillServeAgg.Entity
 		public string Description { get; set; }
 
 
+		public List<SkillServe> SkillServes { get; set; }
+
         public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
+        [AllowNull]
+        public DateTime? LastUpdatedAt { get; set; }
         public bool IsDeleted { get; set; }
     }
 

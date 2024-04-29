@@ -14,9 +14,7 @@ namespace App.Domain.Core.RequestAgg.Entity
 		public Request Request { get; set; }
 		public int RequestId { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
-        public bool IsDeleted { get; set; }
+		public bool IsDeleted { get; set; }    
     }
 }
 

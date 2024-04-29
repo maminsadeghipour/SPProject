@@ -5,6 +5,12 @@ using App.Domain.Core.ExpertAgg.Entity;
 using App.Domain.Core.FeedBackAgg.Entity;
 using App.Domain.Core.RequestAgg.Entity;
 using App.Domain.Core.SkillServeAgg.Entity;
+using App.Infrastructure.DataAccess.Configuration.AddressAgg;
+using App.Infrastructure.DataAccess.Configuration.CustomerAgg;
+using App.Infrastructure.DataAccess.Configuration.ExpertAgg;
+using App.Infrastructure.DataAccess.Configuration.FeebackAgg;
+using App.Infrastructure.DataAccess.Configuration.RequestAgg;
+using App.Infrastructure.DataAccess.Configuration.SkillServeAgg;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.DataAccess.DatabaseContext
@@ -22,7 +28,19 @@ namespace App.Infrastructure.DataAccess.DatabaseContext
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
+        {
+
+            modelBuilder.ApplyConfiguration(new AddressConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new ExpertConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerFeedbackConfiguration());
+            modelBuilder.ApplyConfiguration(new RequestConfiguration());
+            modelBuilder.ApplyConfiguration(new BidConfiguration());
+            modelBuilder.ApplyConfiguration(new RequestPictureConfiguration());
+            modelBuilder.ApplyConfiguration(new SkillServeConfiguration());
+            modelBuilder.ApplyConfiguration(new SkillServeCategoryConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 
