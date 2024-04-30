@@ -13,6 +13,7 @@
     <None Remove="FeebackAgg\" />
     <None Remove="RequestAgg\" />
     <None Remove="SkillServeAgg\" />
+    <None Remove="AdminAgg\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AddressAgg\" />
@@ -21,6 +22,7 @@
     <Folder Include="FeebackAgg\" />
     <Folder Include="RequestAgg\" />
     <Folder Include="SkillServeAgg\" />
+    <Folder Include="AdminAgg\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />

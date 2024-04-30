@@ -1,11 +1,13 @@
 ﻿using System;
 using App.Domain.Core.AddressAgg.Entity;
+using App.Domain.Core.AdminAgg.Entity;
 using App.Domain.Core.CustomerAgg.Entity;
 using App.Domain.Core.ExpertAgg.Entity;
 using App.Domain.Core.FeedBackAgg.Entity;
 using App.Domain.Core.RequestAgg.Entity;
 using App.Domain.Core.SkillServeAgg.Entity;
 using App.Infrastructure.DataAccess.Configuration.AddressAgg;
+using App.Infrastructure.DataAccess.Configuration.AdminAgg;
 using App.Infrastructure.DataAccess.Configuration.CustomerAgg;
 using App.Infrastructure.DataAccess.Configuration.ExpertAgg;
 using App.Infrastructure.DataAccess.Configuration.FeebackAgg;
@@ -40,6 +42,7 @@ namespace App.Infrastructure.DataAccess.DatabaseContext
             modelBuilder.ApplyConfiguration(new RequestPictureConfiguration());
             modelBuilder.ApplyConfiguration(new SkillServeConfiguration());
             modelBuilder.ApplyConfiguration(new SkillServeCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new AdminConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -54,6 +57,7 @@ namespace App.Infrastructure.DataAccess.DatabaseContext
         public DbSet<RequestPicture> RequestPictures { get; set; }
         public DbSet<SkillServe> SkillServes { get; set; }
         public DbSet<SkillServeCategory> SkillServeCategories { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }
 

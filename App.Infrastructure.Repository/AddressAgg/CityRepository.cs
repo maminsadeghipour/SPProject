@@ -27,7 +27,7 @@ namespace App.Infrastructure.Repository.AddressAgg
             _context.SaveChanges();
         }
 
-        public List<City> GetAll() => _context.Cities.ToList();
+        public List<City> GetAll() => _context.Cities.AsNoTracking().ToList();
 
 
         public City GetById(int id) => _context.Cities.AsNoTracking().FirstOrDefault(c => c.Id == id);

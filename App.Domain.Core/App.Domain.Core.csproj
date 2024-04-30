@@ -35,6 +35,10 @@
     <None Remove="RequestAgg\Contracts\RequestContracts\" />
     <None Remove="SkillServeAgg\Contracts\SkillServeContracts\" />
     <None Remove="SkillServeAgg\Contracts\SkillServeCategoryContracts\" />
+    <None Remove="AdminAgg\" />
+    <None Remove="AdminAgg\Entity\" />
+    <None Remove="AdminAgg\Contracts\" />
+    <None Remove="AdminAgg\Contracts\AdminContracts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -65,5 +69,9 @@
     <Folder Include="RequestAgg\Contracts\RequestContracts\" />
     <Folder Include="SkillServeAgg\Contracts\SkillServeContracts\" />
     <Folder Include="SkillServeAgg\Contracts\SkillServeCategoryContracts\" />
+    <Folder Include="AdminAgg\" />
+    <Folder Include="AdminAgg\Entity\" />
+    <Folder Include="AdminAgg\Contracts\" />
+    <Folder Include="AdminAgg\Contracts\AdminContracts\" />
   </ItemGroup>
 </Project>
