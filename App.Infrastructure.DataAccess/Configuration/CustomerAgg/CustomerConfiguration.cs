@@ -43,7 +43,15 @@ namespace App.Infrastructure.DataAccess.Configuration.CustomerAgg
                 .WithOne(cf => cf.Customer)
                 .HasForeignKey(cf => cf.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
-                
+
+            #region SeedData
+
+            builder.HasData(
+                new Customer() { Id = 1, FirstName = "Ali", LastName = "Alizadeh", Username = "Ali.Alizadeh",
+                Password = "1234", RegisteredAt = DateTime.Now, CreatedAt = DateTime.Now, PhoneNumber = "09121234567"}
+                );
+
+            #endregion
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using App.Domain.Core.CustomerAgg.Entity;
 using App.Domain.Core.ExpertAgg.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -43,6 +44,25 @@ namespace App.Infrastructure.DataAccess.Configuration.ExpertAgg
                 .WithOne(c=>c.Expert)
                 .HasForeignKey(c=> c.ExpertId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            #region SeedData
+
+            builder.HasData(
+                new Expert()
+                {
+                    Id = 1,
+                    FirstName = "Mohmad",
+                    LastName = "Sadeghi",
+                    Username = "m.sadeghi",
+                    Password = "1234",
+                    RegisteredAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                    PhoneNumber = "09123215476",
+                    BankAccount = "6362141111223344"
+                }
+                );
+
+            #endregion
         }
     }
 }
