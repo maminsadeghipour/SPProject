@@ -5,11 +5,11 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts
 {
 	public interface ISkillServeRepository
 	{
-        void Add(SkillServe skillServe);
-        List<SkillServe> GetAll();
-        SkillServe GetById(int id);
-        void Update(SkillServe skillServe);
-        void DeleteById(int id);
+        Task Add(SkillServe skillServe, CancellationToken cancellationToken);
+        Task<List<SkillServe>> GetAll(CancellationToken cancellationToken);
+        Task<SkillServe> GetById(int id, CancellationToken cancellationToken);
+        Task Update(SkillServe skillServe, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

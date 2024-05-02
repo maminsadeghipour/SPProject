@@ -8,42 +8,74 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 {
 	public class SkillServeRepository : ISkillServeRepository
     {
+        
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public SkillServeRepository(AppDbContext context)
         {
             _context = context;
         }
 
+        #endregion
 
-        public void Add(SkillServe skillServe)
+
+        #region Implementations
+        public async Task<List<SkillServe>> GetAll(CancellationToken cancellationToken) => await _context.SkillServes.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(SkillServe skill, CancellationToken cancellationToken)
         {
-            _context.SkillServes.Add(skillServe);
-            _context.SaveChanges();
+            await _context.SkillServes.AddAsync(skill, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var skillServe = _context.SkillServes.Find(id);
-            skillServe.IsDeleted = true;
-            _context.SaveChanges();
+            var skill = await GetSkillServeById(id, cancellationToken);
+            skill.IsDeleted = true;
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<SkillServe> GetAll() => _context.SkillServes.AsNoTracking().ToList();
-
-        public SkillServe GetById(int id) => _context.SkillServes.AsNoTracking().FirstOrDefault(c => c.Id == id);
-
-        public void Update(SkillServe skillServe)
+        public async Task<SkillServe> GetById(int id, CancellationToken cancellationToken)
         {
-            var skillServeInDatabse = _context.SkillServes.FirstOrDefault(c => c.Id == skillServe.Id);
-
-            if (skillServe.Title != null)
-                skillServeInDatabse.Title = skillServe.Title;
-
-            skillServeInDatabse.LastUpdatedAt = DateTime.Now;
-
-            _context.SaveChanges();
+            var skill = await _context.SkillServes.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (skill != null)
+                return skill;
+            throw new Exception($"Skilskill with id {id} did not found");
         }
+
+
+        public async Task Update(SkillServe skill, CancellationToken cancellationToken)
+        {
+            var skillInDatabse = await GetSkillServeById(skill.Id, cancellationToken);
+
+            if (skill.Title != null)
+                skillInDatabse.Title = skill.Title;
+
+            skillInDatabse.LastUpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        #endregion
+
+
+
+
+
+
+        #region Privates
+        private async Task<SkillServe> GetSkillServeById(int id, CancellationToken cancellationToken)
+        {
+            var skill = await _context.SkillServes.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (skill != null)
+                return skill;
+            throw new Exception($"SkillServe with id {id} did not found");
+        }
+
+        #endregion
     }
 }
 

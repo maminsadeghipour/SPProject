@@ -8,36 +8,49 @@ namespace App.Infrastructure.Repository.FeebackAgg
 {
 	public class CustomerFeedbackRepository : ICustomerFeedbackRepository
     {
+
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public CustomerFeedbackRepository(AppDbContext context)
         {
             _context = context;
         }
 
+        #endregion
 
-        public void Add(CostumerFeedback feeback)
+        #region Implementations
+        public async Task<List<CostumerFeedback>> GetAll(CancellationToken cancellationToken) => await _context.CostumerFeedbacks.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(CostumerFeedback feeback, CancellationToken cancellationToken)
         {
-            _context.CostumerFeedbacks.Add(feeback);
-            _context.SaveChanges();
+            await _context.CostumerFeedbacks.AddAsync(feeback,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var feedback = _context.CostumerFeedbacks.FirstOrDefault(cf => cf.Id == id);
+            var feedback = await GetCostumerFeedbackById(id, cancellationToken);
             feedback.IsDeleted = true;
             feedback.LastUpdatedAt = DateTime.Now;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<CostumerFeedback> GetAll() => _context.CostumerFeedbacks.AsNoTracking().ToList();
-
-        public CostumerFeedback GetById(int id) => _context.CostumerFeedbacks.AsNoTracking().FirstOrDefault(cf=>cf.Id == id);
-        
-
-        public void Update(CostumerFeedback feedback)
+        public async Task<CostumerFeedback> GetById(int id, CancellationToken cancellationToken)
         {
-            var feedbakInDatabase = _context.CostumerFeedbacks.FirstOrDefault(cf => cf.Id == feedback.Id);
+            var feedback = await _context.CostumerFeedbacks.AsNoTracking().FirstOrDefaultAsync(cf => cf.Id == id, cancellationToken);
+            if (feedback != null)
+                return feedback;
+            throw new Exception($"CustomerFeedback with id {id} did not found");
+        }
+
+
+        public async Task Update(CostumerFeedback feedback, CancellationToken cancellationToken)
+        {
+            var feedbakInDatabase = await GetCostumerFeedbackById(feedback.Id, cancellationToken);
 
             if (feedback.Description != null)
                 feedbakInDatabase.Description = feedback.Description;
@@ -46,9 +59,30 @@ namespace App.Infrastructure.Repository.FeebackAgg
 
             feedbakInDatabase.LastUpdatedAt = DateTime.Now;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
         }
+
+
+        #endregion
+
+
+
+
+
+        
+
+
+        #region Privates
+        private async Task<CostumerFeedback> GetCostumerFeedbackById(int id, CancellationToken cancellationToken)
+        {
+            var feedback = await _context.CostumerFeedbacks.AsNoTracking().FirstOrDefaultAsync(cf => cf.Id == id, cancellationToken);
+            if (feedback != null)
+                return feedback;
+            throw new Exception($"CustomerFeedback with id {id} did not found");
+        }
+
+        #endregion
     }
 }
 

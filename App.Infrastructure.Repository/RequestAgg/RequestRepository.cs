@@ -9,44 +9,69 @@ namespace App.Infrastructure.Repository.RequestAgg
 	public class RequestRepository : IRequestRepository
     {
 
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public RequestRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        
+        #endregion
 
-        public void Add(Request request)
+        #region Implementations
+        public async Task<List<Request>> GetAll(CancellationToken cancellationToken) => await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(Request request, CancellationToken cancellationToken)
         {
-            _context.Requests.Add(request);
-            _context.SaveChanges();
+            await _context.Requests.AddAsync(request,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var request = _context.Requests.Find(id);
+            var request = await GetRequestById(id, cancellationToken);
             request.IsDeleted=true;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<Request> GetAll() => _context.Requests.AsNoTracking().ToList();
-
-
-        public Request GetById(int id) => _context.Requests.AsNoTracking().FirstOrDefault(r => r.Id == id);
-
-        public void Update(Request request)
+        public async Task<Request> GetById(int id, CancellationToken cancellationToken)
         {
-            var requestInDatabase = _context.Requests.FirstOrDefault(r => r.Id == request.Id);
+            var request = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted , cancellationToken);
+            if (request != null)
+                return request;
+            throw new Exception($"Request with id {id} did not found");
+        }
+
+        public async Task Update(Request request, CancellationToken cancellationToken)
+        {
+            var requestInDatabase = await GetRequestById(request.Id, cancellationToken);
 
             requestInDatabase.RequestState = request.RequestState;
 
             requestInDatabase.LastUpdatedAt = DateTime.Now;
 
-            _context.SaveChanges();
-
+            await _context.SaveChangesAsync(cancellationToken);
         }
+        #endregion
+
+
+
+
+
+        #region Privates
+        private async Task<Request> GetRequestById(int id, CancellationToken cancellationToken)
+        {
+            var request = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+            if (request != null)
+                return request;
+            throw new Exception($"Request with id {id} did not found");
+        }
+      
+        #endregion
     }
 }
 

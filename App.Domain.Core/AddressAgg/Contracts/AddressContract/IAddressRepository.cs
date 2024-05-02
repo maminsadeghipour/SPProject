@@ -5,11 +5,11 @@ namespace App.Domain.Core.AddressAgg.Contracts.AddressContract
 {
 	public interface IAddressRepository
 	{
-		void Add(Address address);
-		List<Address> GetAll();
-		Address GetById(int id);
-		void Update(Address address);
-		void DeleteById(int id);
+		Task Add(Address address, CancellationToken cancellationToken);
+		Task<List<Address>> GetAll(CancellationToken cancellationToken);
+		Task<Address> GetById(int id, CancellationToken cancellationToken);
+		Task Update(Address address, CancellationToken cancellationToken);
+		Task DeleteById(int id, CancellationToken cancellationToken);
 
 	}
 }

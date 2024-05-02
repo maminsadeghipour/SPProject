@@ -6,11 +6,11 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
 {
 	public interface ISkillServeCategoryRepository
 	{
-        void Add(SkillServeCategory category);
-        List<SkillServeCategory> GetAll();
-        SkillServeCategory GetById(int id);
-        void Update(SkillServeCategory category);
-        void DeleteById(int id);
+        Task Add(SkillServeCategory category,CancellationToken cancellationToken);
+        Task<List<SkillServeCategory>> GetAll(CancellationToken cancellationToken);
+        Task<SkillServeCategory> GetById(int id, CancellationToken cancellationToken);
+        Task Update(SkillServeCategory category, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

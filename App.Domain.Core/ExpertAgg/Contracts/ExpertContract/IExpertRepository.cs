@@ -5,11 +5,11 @@ namespace App.Domain.Core.ExpertAgg.Contracts.ExpertContract
 {
 	public interface IExpertRepository
 	{
-        void Add(Expert expert);
-        List<Expert> GetAll();
-        Expert GetById(int id);
-        void Update(Expert expert);
-        void DeleteById(int id);
+        Task Add(Expert expert,CancellationToken cancellationToken);
+        Task<List<Expert>> GetAll(CancellationToken cancellationToken);
+        Task<Expert> GetById(int id, CancellationToken cancellationToken);
+        Task Update(Expert expert, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

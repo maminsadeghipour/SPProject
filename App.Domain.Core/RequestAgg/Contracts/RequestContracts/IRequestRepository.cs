@@ -5,11 +5,11 @@ namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
 {
 	public interface IRequestRepository
 	{
-        void Add(Request request);
-        List<Request> GetAll();
-        Request GetById(int id);
-        void Update(Request request);
-        void DeleteById(int id);
+        Task Add(Request request, CancellationToken cancellationToken);
+        Task<List<Request>> GetAll(CancellationToken cancellationToken);
+        Task<Request> GetById(int id, CancellationToken cancellationToken);
+        Task Update(Request request, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

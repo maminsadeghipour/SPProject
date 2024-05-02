@@ -8,45 +8,70 @@ namespace App.Infrastructure.Repository.CustomerAgg
 {
 	public class CustomerRepository : ICustomerRepository
     {
+
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public CustomerRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        
+        #endregion
 
-        public void Add(Customer customer)
+        #region Implementations
+        public async Task<List<Customer>> GetAll(CancellationToken cancellationToken) => await _context.Customers.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(Customer customer, CancellationToken cancellationToken)
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();            
+            await _context.Customers.AddAsync(customer,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);            
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var customer = _context.Customers.FirstOrDefault(c => c.Id == id);
+            var customer = await GetCustomerById(id, cancellationToken);
             customer.IsDeleted = true;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<Customer> GetAll() => _context.Customers.ToList();
-
-
-        public Customer GetById(int id) => _context.Customers.AsNoTracking().FirstOrDefault(c => c.Id == id);
-        
-
-        public void Update(Customer customer)
+        public async Task<Customer> GetById(int id, CancellationToken cancellationToken)
         {
-            var customerInDatabase = _context.Customers.FirstOrDefault(c => c.Id == customer.Id);
+            var customer = await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (customer != null)
+                return customer;
+            throw new Exception($"Customer with id {id} did not found");
+        }
+
+        public async Task Update(Customer customer, CancellationToken cancellationToken)
+        {
+            var customerInDatabase = await GetCustomerById(customer.Id, cancellationToken);
             if (customer.FirstName != null)
                 customerInDatabase.FirstName = customer.FirstName;
             if (customer.LastName != null)
                 customerInDatabase.LastName = customer.LastName;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
 
         }
+
+
+        #endregion
+
+        #region Privates
+        private async Task<Customer> GetCustomerById(int id, CancellationToken cancellationToken)
+        {
+            var customer = await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (customer != null)
+                return customer;
+            throw new Exception($"Customer with id {id} did not found");
+
+        }
+
+        #endregion
     }
 }
 

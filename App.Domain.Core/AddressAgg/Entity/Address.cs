@@ -26,6 +26,7 @@ namespace App.Domain.Core.AddressAgg.Entity
         public DateTime CreatedAt { get; set; }
         [AllowNull]
         public DateTime? LastUpdatedAt { get; set; }
+
 		public bool IsDeleted { get; set; }
 
     }

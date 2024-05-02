@@ -6,11 +6,11 @@ namespace App.Domain.Core.CustomerAgg.Contracts.CustomerContracts
 {
 	public interface ICustomerRepository
 	{
-        void Add(Customer customer);
-        List<Customer> GetAll();
-        Customer GetById(int id);
-        void Update(Customer customer);
-        void DeleteById(int id);
+        Task Add(Customer customer, CancellationToken cancellationToken);
+        Task<List<Customer>> GetAll(CancellationToken cancellationToken);
+        Task<Customer> GetById(int id, CancellationToken cancellationToken);
+        Task Update(Customer customer, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

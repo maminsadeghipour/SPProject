@@ -9,42 +9,74 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 	public class SkillServeCategoryRepository : ISkillServeCategoryRepository
     {
 
+
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public SkillServeCategoryRepository(AppDbContext context)
         {
             _context = context;
         }
-        
 
-        public void Add(SkillServeCategory category)
+        #endregion
+
+
+        #region Implementations
+        public async Task<List<SkillServeCategory>> GetAll(CancellationToken cancellationToken) => await _context.SkillServeCategories.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(SkillServeCategory category, CancellationToken cancellationToken)
         {
-            _context.SkillServeCategories.Add(category);
-            _context.SaveChanges();
+            await _context.SkillServeCategories.AddAsync(category,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var category = _context.SkillServeCategories.Find(id);
+            var category = await GetSkillServeCategoryById(id, cancellationToken);
             category.IsDeleted = true;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<SkillServeCategory> GetAll() => _context.SkillServeCategories.AsNoTracking().ToList();
-
-        public SkillServeCategory GetById(int id) => _context.SkillServeCategories.AsNoTracking().FirstOrDefault(c => c.Id == id);
-
-        public void Update(SkillServeCategory category)
+        public async Task<SkillServeCategory> GetById(int id, CancellationToken cancellationToken)
         {
-            var categoryInDatabse = _context.SkillServeCategories.FirstOrDefault(c => c.Id == category.Id);
+            var category = await _context.SkillServeCategories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (category != null)
+                return category;
+            throw new Exception($"SkilCategory with id {id} did not found");
+        }
+
+
+        public async Task Update(SkillServeCategory category, CancellationToken cancellationToken)
+        {
+            var categoryInDatabse = await GetSkillServeCategoryById(category.Id, cancellationToken);
 
             if (category.Title != null)
                 categoryInDatabse.Title = category.Title;
 
             categoryInDatabse.LastUpdatedAt = DateTime.Now;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
+        #endregion
+
+
+
+
+
+
+        #region Privates
+        private async Task<SkillServeCategory> GetSkillServeCategoryById(int id, CancellationToken cancellationToken)
+        {
+            var category = await _context.SkillServeCategories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (category != null)
+                return category;
+            throw new Exception($"SkillCategory with id {id} did not found");
+        }
+
+        #endregion
     }
 }
 

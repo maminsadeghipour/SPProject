@@ -6,11 +6,11 @@ namespace App.Domain.Core.RequestAgg.Contracts.BidContracts
 {
 	public interface IBidRepository
 	{
-        void Add(Bid bid);
-        List<Bid> GetAll();
-        Bid GetById(int id);
-        void Update(Bid bid);
-        void DeleteById(int id);
+        Task Add(Bid bid, CancellationToken cancellationToken);
+        Task<List<Bid>> GetAll(CancellationToken cancellationToken);
+        Task<Bid> GetById(int id, CancellationToken cancellationToken);
+        Task Update(Bid bid, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

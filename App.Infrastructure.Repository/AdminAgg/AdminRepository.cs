@@ -9,47 +9,73 @@ namespace App.Infrastructure.Repository.AdminAgg
 {
 	public class AdminRepository : IAdminRepository
 	{
-		
-
+        #region Fields
         private readonly AppDbContext _context;
 
+        #endregion
+
+        #region Constructors
         public AdminRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public void Add(Admin admin)
+
+        #endregion
+
+        #region Implemantation
+        public async Task<List<Admin>> GetAll(CancellationToken cancellationToken) => await _context.Admins.AsNoTracking().ToListAsync(cancellationToken);
+
+
+        public async Task Add(Admin admin, CancellationToken cancellationToken)
         {
-            _context.Admins.Add(admin);
-            _context.SaveChanges();
+            await _context.Admins.AddAsync(admin,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var address = _context.Admins.FirstOrDefault(a => a.Id == id);
-            address.IsDeleted = true;
-            _context.SaveChanges();
+            var admin = await GetAdminById(id, cancellationToken);
+            admin.IsDeleted = true;
+            await _context.SaveChangesAsync();
         }
 
-        public List<Admin> GetAll() => _context.Admins.AsNoTracking().ToList();
-
-
-        public Admin GetById(int id) => _context.Admins.AsNoTracking().FirstOrDefault(a => a.Id == id);
-
-
-        public void Update(Admin admin)
+        public async Task<Admin> GetById(int id, CancellationToken cancellationToken)
         {
-            var adminInDatabase = _context.Addresses.First(a => a.Id == admin.Id);
+            var admin = await _context.Admins.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted, cancellationToken);
+            if (admin != null)
+                return admin;
+            throw new Exception($"Admin with id {id} did not found");
+        }
+
+        public async Task Update(Admin admin, CancellationToken cancellationToken)
+        {
+            var adminInDatabase = await GetAdminById(admin.Id, cancellationToken);
+                 
 
             if (admin.Username != null)
-                adminInDatabase.Title = admin.Username;
+                adminInDatabase.Username = admin.Username;
             if (admin.Password != null)
-                adminInDatabase.Street = admin.Password;
+                adminInDatabase.Password = admin.Password;
 
             adminInDatabase.LastUpdatedAt = DateTime.Now;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
+
+        #endregion
+
+        #region Privates
+        private async Task<Admin> GetAdminById(int id, CancellationToken cancellationToken)
+        {
+            var admin = await _context.Admins.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+            if (admin != null)
+                return admin;
+            throw new Exception($"Admin with id {id} did not found");
+
+        }
+
+        #endregion
     }
 }
 

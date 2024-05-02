@@ -6,11 +6,11 @@ namespace App.Domain.Core.AdminAgg.Contracts.AdminContracts
 {
 	public interface IAdminRepository
 	{
-        void Add(Admin admin);
-        List<Admin> GetAll();
-        Admin GetById(int id);
-        void Update(Admin admin);
-        void DeleteById(int id);
+        Task Add(Admin admin, CancellationToken cancellationToken);
+        Task<List<Admin>> GetAll(CancellationToken cancellationToken);
+        Task<Admin> GetById(int id, CancellationToken cancellationToken);
+        Task Update(Admin admin, CancellationToken cancellationToken);
+        Task DeleteById(int id, CancellationToken cancellationToken);
     }
 }
 

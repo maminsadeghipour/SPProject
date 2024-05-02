@@ -8,35 +8,48 @@ namespace App.Infrastructure.Repository.AddressAgg
 {
 	public class AddressRepository : IAddressRepository
 	{
+
+        #region Fields
         private readonly AppDbContext _context;
 
-        public AddressRepository(AppDbContext appDbContext )
+        #endregion
+
+        #region Constructors        
+        public AddressRepository(AppDbContext appDbContext)
 		{
             _context = appDbContext;
         }
 
-        public void Add(Address address)
+        #endregion
+
+
+        #region Implementations
+        public async Task<List<Address>> GetAll(CancellationToken cancellationToken) => await _context.Addresses.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task Add(Address address, CancellationToken cancellationToken)
         {
-            _context.Addresses.Add(address);
-            _context.SaveChanges();
+            await _context.Addresses.AddAsync(address, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteById(int id, CancellationToken cancellationToken)
         {
-            var address = _context.Addresses.FirstOrDefault(a => a.Id == id);
+            var address = await GetAddreesById(id,cancellationToken);
             address.IsDeleted = true;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public List<Address> GetAll() => _context.Addresses.AsNoTracking().ToList();
+        public async Task<Address> GetById(int id, CancellationToken cancellationToken)
+        {            
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+            if (address != null)
+                return address;
+            throw new Exception($"Address with id {id} did not found");
+        }
 
-
-        public Address GetById(int id) => _context.Addresses.AsNoTracking().FirstOrDefault(a => a.Id == id);
-        
-
-        public void Update(Address address)
+        public async Task Update(Address address, CancellationToken cancellationToken)
         {
-            var addressInDatabase = _context.Addresses.First(a => a.Id == address.Id);
+            var addressInDatabase = await GetAddreesById(address.Id,cancellationToken);
 
             if (address.Title != null)
                 addressInDatabase.Title = address.Title;
@@ -45,8 +58,22 @@ namespace App.Infrastructure.Repository.AddressAgg
 
             addressInDatabase.LastUpdatedAt = DateTime.Now;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
+
+        #endregion
+
+           
+        #region Privates
+        private async Task<Address> GetAddreesById(int id, CancellationToken cancellationToken)
+        {
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == id,cancellationToken);
+            if (address != null)
+                return address;
+            throw new Exception($"Address with id {id} did not found");
+        }
+
+        #endregion
     }
 }
 
