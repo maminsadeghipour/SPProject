@@ -1,7 +1,22 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using App.Domain.AppService.ExpertAgg;
+using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
+using App.Domain.Service.ExpertAgg;
+using App.Infrastructure.DataAccess.DatabaseContext;
+using App.Infrastructure.Repository.ExpertAgg;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>();
+
+
+builder.Services.AddScoped<IExpertAppService, ExpertAppService>();
+builder.Services.AddScoped<IExpertService, ExpertService>();
+builder.Services.AddScoped<IExpertRepository, ExpertRepository>();
+
+
 
 var app = builder.Build();
 

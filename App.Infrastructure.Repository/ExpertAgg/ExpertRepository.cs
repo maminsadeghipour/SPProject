@@ -25,6 +25,9 @@ namespace App.Infrastructure.Repository.ExpertAgg
         #region Implementations
         public async Task<List<Expert>> GetAll(CancellationToken cancellationToken) => await _context.Experts.AsNoTracking().ToListAsync(cancellationToken);
 
+        public async Task<int> Count(CancellationToken cancellationToken) => await _context.Experts.Where(e => !e.IsDeleted).CountAsync(cancellationToken);
+        
+
         public async Task Add(Expert expert, CancellationToken cancellationToken)
         {
             await _context.Experts.AddAsync(expert,cancellationToken);
@@ -58,6 +61,7 @@ namespace App.Infrastructure.Repository.ExpertAgg
         }
 
 
+
         #endregion
 
 
@@ -73,6 +77,8 @@ namespace App.Infrastructure.Repository.ExpertAgg
                 return expert;
             throw new Exception($"Expert with id {id} did not found");
         }
+
+        
 
         #endregion
     }

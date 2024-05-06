@@ -10,6 +10,8 @@ namespace App.Domain.Core.ExpertAgg.Contracts.ExpertContract
         Task<Expert> GetById(int id, CancellationToken cancellationToken);
         Task Update(Expert expert, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> Count(CancellationToken cancellationToken);
     }
 }
 
