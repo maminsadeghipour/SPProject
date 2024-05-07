@@ -20,11 +20,19 @@ namespace App.EndPoint.Mvc.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        public  IActionResult Index(CancellationToken cancellationToken)
         {
+            return View();
+        }
 
-            var countEx = await _expertAppService.Count(cancellationToken);
 
+        public IActionResult SkillServesDashboard(CancellationToken cancellationToken)
+        {
+            return View();
+        }
+
+        public IActionResult SkillServesCategoryDashboard(CancellationToken cancellationToken)
+        {
             return View();
         }
     }

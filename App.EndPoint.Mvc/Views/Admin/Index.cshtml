@@ -1,5 +1,12 @@
 ﻿@using App.Domain.Core.ExpertAgg.Contracts.ExpertContract
+@using App.Domain.Core.CustomerAgg.Contracts.CustomerContracts
+@using App.Domain.Core.RequestAgg.Contracts.RequestContracts
+@using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts
+@inject ISkillServeAppService skillServeAppService
 @inject IExpertAppService expertAppService
+@inject ICustomerAppService customerAppService
+@inject IRequestAppService requestAppService
+
 @{
     Layout = "_AdminLayout";
 }
@@ -39,7 +46,7 @@
                                         <i class="ti ti-users ti-sm"></i>
                                     </div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
+                                        <h5 class="mb-0">@await customerAppService.Count(new CancellationToken())</h5>
                                         <small>مشتریان</small>
                                     </div>
                                 </div>
@@ -50,7 +57,7 @@
                                         <i class="ti ti-file ti-sm"></i>
                                     </div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
+                                        <h5 class="mb-0">@await requestAppService.Count(new CancellationToken())</h5>
                                         <small>درخواست ها</small>
                                     </div>
                                 </div>
@@ -61,7 +68,7 @@
                                         <i class="ti ti-x ti-sm"></i>
                                     </div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
+                                        <h5 class="mb-0">@await skillServeAppService.Count(new CancellationToken())</h5>
                                         <small>خدمات ارائه شده</small>
                                     </div>
                                 </div>
@@ -72,11 +79,6 @@
                 </div>
             </div>
             <!--/ Statistics -->
-
-
-
-
-
 
         </div>
 

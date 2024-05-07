@@ -10,6 +10,8 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts
         Task<SkillServe> GetById(int id, CancellationToken cancellationToken);
         Task Update(SkillServe skillServe, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> Count(CancellationToken cancellationToken);
     }
 }
 

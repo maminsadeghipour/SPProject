@@ -23,7 +23,12 @@ namespace App.Infrastructure.Repository.CustomerAgg
         #endregion
 
         #region Implementations
-        public async Task<List<Customer>> GetAll(CancellationToken cancellationToken) => await _context.Customers.AsNoTracking().ToListAsync(cancellationToken);
+        public async Task<List<Customer>> GetAll(CancellationToken cancellationToken)
+            => await _context.Customers.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task<int> Count(CancellationToken cancellationToken)
+            => await _context.Customers.Where(c => !c.IsDeleted).CountAsync(cancellationToken);
+        
 
         public async Task Add(Customer customer, CancellationToken cancellationToken)
         {
@@ -70,6 +75,8 @@ namespace App.Infrastructure.Repository.CustomerAgg
             throw new Exception($"Customer with id {id} did not found");
 
         }
+
+        
 
         #endregion
     }

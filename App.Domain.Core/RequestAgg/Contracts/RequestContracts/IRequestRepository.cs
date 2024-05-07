@@ -10,6 +10,8 @@ namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
         Task<Request> GetById(int id, CancellationToken cancellationToken);
         Task Update(Request request, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> Count(CancellationToken cancellationToken);
     }
 }
 

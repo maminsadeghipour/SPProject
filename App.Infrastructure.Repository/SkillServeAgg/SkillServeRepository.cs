@@ -26,6 +26,10 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         #region Implementations
         public async Task<List<SkillServe>> GetAll(CancellationToken cancellationToken) => await _context.SkillServes.AsNoTracking().ToListAsync(cancellationToken);
 
+        public async Task<int> Count(CancellationToken cancellationToken)
+            => await _context.SkillServes.Where(s => !s.IsDeleted).CountAsync(cancellationToken);
+
+
         public async Task Add(SkillServe skill, CancellationToken cancellationToken)
         {
             await _context.SkillServes.AddAsync(skill, cancellationToken);
@@ -64,8 +68,6 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 
 
 
-
-
         #region Privates
         private async Task<SkillServe> GetSkillServeById(int id, CancellationToken cancellationToken)
         {
@@ -74,6 +76,8 @@ namespace App.Infrastructure.Repository.SkillServeAgg
                 return skill;
             throw new Exception($"SkillServe with id {id} did not found");
         }
+
+       
 
         #endregion
     }

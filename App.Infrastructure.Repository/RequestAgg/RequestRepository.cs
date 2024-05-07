@@ -23,7 +23,11 @@ namespace App.Infrastructure.Repository.RequestAgg
         #endregion
 
         #region Implementations
-        public async Task<List<Request>> GetAll(CancellationToken cancellationToken) => await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
+        public async Task<List<Request>> GetAll(CancellationToken cancellationToken)
+            => await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task<int> Count(CancellationToken cancellationToken)
+            => await _context.Requests.Where(r => !r.IsDeleted).CountAsync(cancellationToken);
 
         public async Task Add(Request request, CancellationToken cancellationToken)
         {
