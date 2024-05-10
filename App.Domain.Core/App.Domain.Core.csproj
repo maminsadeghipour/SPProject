@@ -39,6 +39,8 @@
     <None Remove="AdminAgg\Entity\" />
     <None Remove="AdminAgg\Contracts\" />
     <None Remove="AdminAgg\Contracts\AdminContracts\" />
+    <None Remove="SkillServeAgg\ModelViews\" />
+    <None Remove="SkillServeAgg\DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -73,5 +75,7 @@
     <Folder Include="AdminAgg\Entity\" />
     <Folder Include="AdminAgg\Contracts\" />
     <Folder Include="AdminAgg\Contracts\AdminContracts\" />
+    <Folder Include="SkillServeAgg\ModelViews\" />
+    <Folder Include="SkillServeAgg\DTOs\" />
   </ItemGroup>
 </Project>

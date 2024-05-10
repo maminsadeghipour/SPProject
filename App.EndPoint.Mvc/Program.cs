@@ -5,6 +5,7 @@ using App.Domain.AppService.SkillServeAgg;
 using App.Domain.Core.CustomerAgg.Contracts.CustomerContracts;
 using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
 using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
+using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Service.CustomerAgg;
 using App.Domain.Service.ExpertAgg;
@@ -39,6 +40,10 @@ builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<ISkillServeAppService, SkillServeAppService>();
 builder.Services.AddScoped<ISkillServeService,    SkillServeService>();
 builder.Services.AddScoped<ISkillServeRepository, SkillServeRepository>();
+
+builder.Services.AddScoped<ISkillServeCategoryAppService, SkillServeCategoryAppService>();
+builder.Services.AddScoped<ISkillServeCategoryService,    SkillServeCategoryService>();
+builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepository>();
 
 
 
