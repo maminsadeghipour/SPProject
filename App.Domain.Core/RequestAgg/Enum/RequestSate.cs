@@ -13,6 +13,5 @@ namespace App.Domain.Core.RequestAgg.Enum
 		BannedByAdmin
   	}
 
-	
 }
 
