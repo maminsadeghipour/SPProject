@@ -1,4 +1,5 @@
 ﻿using System;
+using App.Domain.Core.RequestAgg.DTOs;
 using App.Domain.Core.RequestAgg.Entity;
 
 namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
@@ -10,6 +11,10 @@ namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
         Task<Request> GetById(int id, CancellationToken cancellationToken);
         Task Update(Request request, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> Count(CancellationToken cancellationToken);
+
+        Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken);
     }
 }
 

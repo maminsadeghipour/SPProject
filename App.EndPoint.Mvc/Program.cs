@@ -1,4 +1,23 @@
-﻿using Serilog;
+
+using Serilog;
+using App.Domain.AppService.CustomerAgg;
+using App.Domain.AppService.ExpertAgg;
+using App.Domain.AppService.RequestAgg;
+using App.Domain.AppService.SkillServeAgg;
+using App.Domain.Core.CustomerAgg.Contracts.CustomerContracts;
+using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
+using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
+using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
+using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
+using App.Domain.Service.CustomerAgg;
+using App.Domain.Service.ExpertAgg;
+using App.Domain.Service.RequestAgg;
+using App.Domain.Service.SkillServeAgg;
+using App.Infrastructure.DataAccess.DatabaseContext;
+using App.Infrastructure.Repository.CustomerAgg;
+using App.Infrastructure.Repository.ExpertAgg;
+using App.Infrastructure.Repository.RequestAgg;
+using App.Infrastructure.Repository.SkillServeAgg;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +35,33 @@ builder.Host.ConfigureLogging(loggingBuilder =>
 
 });
    
-
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>();
+
+
+builder.Services.AddScoped<IExpertAppService, ExpertAppService>();
+builder.Services.AddScoped<IExpertService, ExpertService>();
+builder.Services.AddScoped<IExpertRepository, ExpertRepository>();
+
+builder.Services.AddScoped<ICustomerAppService, CustomerAppService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+
+builder.Services.AddScoped<IRequestAppService, RequestAppService>();
+builder.Services.AddScoped<IRequestService,    RequestService>();
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+
+builder.Services.AddScoped<ISkillServeAppService, SkillServeAppService>();
+builder.Services.AddScoped<ISkillServeService,    SkillServeService>();
+builder.Services.AddScoped<ISkillServeRepository, SkillServeRepository>();
+
+builder.Services.AddScoped<ISkillServeCategoryAppService, SkillServeCategoryAppService>();
+builder.Services.AddScoped<ISkillServeCategoryService,    SkillServeCategoryService>();
+builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepository>();
+
+
 
 var app = builder.Build();
 
