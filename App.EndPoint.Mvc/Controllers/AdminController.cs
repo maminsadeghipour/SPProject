@@ -53,8 +53,8 @@ namespace App.EndPoint.Mvc.Controllers
 
         public async Task<IActionResult> RequestDashboard(CancellationToken cancellationToken)
         {
-            var request = await _requestAppService.GetAllRequestsWithDetails(cancellationToken);
-            return View(request);
+            var requests = await _requestAppService.GetAllRequestsWithDetails(cancellationToken);
+            return View(requests);
         }
 
 
@@ -133,6 +133,13 @@ namespace App.EndPoint.Mvc.Controllers
             return RedirectToAction(nameof(SkillServesDashboard));
         }
 
+
+        // Request Detail
+        public async Task<IActionResult> RequestDetails(int id, CancellationToken cancellationToken)
+        {
+
+            return View();
+        }
 
 
     }
