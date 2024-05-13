@@ -1,4 +1,6 @@
-﻿using App.Domain.AppService.CustomerAgg;
+
+using Serilog;
+using App.Domain.AppService.CustomerAgg;
 using App.Domain.AppService.ExpertAgg;
 using App.Domain.AppService.RequestAgg;
 using App.Domain.AppService.SkillServeAgg;
@@ -19,6 +21,20 @@ using App.Infrastructure.Repository.SkillServeAgg;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add SeriLog
+builder.Host.ConfigureLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders();
+}).UseSerilog((context, configs) =>
+{
+    configs.WriteTo.Console(Serilog.Events.LogEventLevel.Verbose);
+
+    configs.WriteTo.Seq("http://localhost:5341", Serilog.Events.LogEventLevel.Information, apiKey: "sOT1arqVtufKGchjjDgd")
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Error);
+    
+
+});
+   
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -48,6 +64,9 @@ builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepo
 
 
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
