@@ -41,6 +41,9 @@ namespace App.Domain.Service.SkillServeAgg
         public async Task Update(UpdateSkillServeCategoryDto category, CancellationToken cancellationToken)
             => await _repo.Update(category, cancellationToken);
 
+        public async Task<List<TitleSkillServeCategoryModelView>> GetTitles(CancellationToken cancellationToken)
+            => await _repo.GetTitles(cancellationToken);
+
         public async Task Add(AddSkillServeCategoryModelView categoryModelView, CancellationToken cancellationToken)
         {
             SkillServeCategory category = new() { Title = categoryModelView.Title, Description = categoryModelView.Description,CreatedAt = DateTime.Now };

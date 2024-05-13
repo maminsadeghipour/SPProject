@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
+using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
+using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.ModelViews;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +19,16 @@ namespace App.EndPoint.Mvc.Controllers
 
         private readonly IExpertAppService _expertAppService;
         private readonly ISkillServeCategoryAppService _skillServeCategoryAppService;
+        private readonly ISkillServeAppService _skillServeAppService;
+        private readonly IRequestAppService _requestAppService;
 
-        public AdminController(IExpertAppService expertAppService, ISkillServeCategoryAppService skillServeCategoryAppService)
+        public AdminController(IExpertAppService expertAppService, ISkillServeCategoryAppService skillServeCategoryAppService,
+            ISkillServeAppService skillServeAppService, IRequestAppService requestAppService)
         {
             _expertAppService = expertAppService;
             _skillServeCategoryAppService = skillServeCategoryAppService;
+            _skillServeAppService = skillServeAppService;
+            _requestAppService = requestAppService;
         }
 
         // GET: /<controller>/
@@ -32,15 +39,22 @@ namespace App.EndPoint.Mvc.Controllers
 
         // Dashboards
 
-        public IActionResult SkillServesDashboard(CancellationToken cancellationToken)
+        public async Task<IActionResult>SkillServesDashboard(CancellationToken cancellationToken)
         {
-            return View();
+            var skillServesWithDetail = await _skillServeAppService.GetSkillServesWithDetails(cancellationToken);
+            return View(skillServesWithDetail);
         }
 
         public async Task<IActionResult> SkillServesCategoryDashboard(CancellationToken cancellationToken)
         {
             var categoryWithDetails = await _skillServeCategoryAppService.GetCategoriesWithDetails(cancellationToken);
             return View(categoryWithDetails);
+        }
+
+        public async Task<IActionResult> RequestDashboard(CancellationToken cancellationToken)
+        {
+            var request = await _requestAppService.GetAllRequestsWithDetails(cancellationToken);
+            return View(request);
         }
 
 
@@ -76,6 +90,51 @@ namespace App.EndPoint.Mvc.Controllers
             await _skillServeCategoryAppService.DeleteById(id,cancellationToken);
             return RedirectToAction(nameof(SkillServesCategoryDashboard));
         }
+
+        // Add SkillServe
+        public async Task<IActionResult> AddSkillServe(CancellationToken cancellationToken)
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddSkillServe(AddSkillServeModelView skillServe ,CancellationToken cancellationToken)
+        {
+            if (ModelState.IsValid)
+            {
+                await _skillServeAppService.Add(skillServe, cancellationToken);
+                return RedirectToAction(nameof(SkillServesDashboard));
+
+            }
+            return View(skillServe);
+        }
+
+        // Update Skill
+        public async Task<IActionResult> UpdateSkillServe(int id, CancellationToken cancellationToken)
+        {
+            var skill = await _skillServeAppService.UpdateDtoGetById(id, cancellationToken);
+            return View(skill);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateSkillServe(UpdateSkillServeDto skill, CancellationToken cancellationToken)
+        {
+            if (ModelState.IsValid)
+            {
+                await _skillServeAppService.Update(skill, cancellationToken);
+                return RedirectToAction(nameof(SkillServesDashboard));
+
+            }
+            return View(skill);
+        }
+
+        // Delete Skill
+        public async Task<IActionResult> DeleteSkillServe(int id, CancellationToken cancellationToken)
+        {
+            await _skillServeAppService.DeleteById(id, cancellationToken);
+            return RedirectToAction(nameof(SkillServesDashboard));
+        }
+
+
+
     }
 }
 

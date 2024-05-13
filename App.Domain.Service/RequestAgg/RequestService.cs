@@ -1,5 +1,6 @@
 ﻿using System;
 using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
+using App.Domain.Core.RequestAgg.DTOs;
 
 namespace App.Domain.Service.RequestAgg
 {
@@ -22,6 +23,9 @@ namespace App.Domain.Service.RequestAgg
         #region Implementations
         public async Task<int> Count(CancellationToken cancellationToken)
             => await _repo.Count(cancellationToken);
+
+        public async Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken)
+            => await _repo.GetAllRequestsWithDetails(cancellationToken);
 
         #endregion
 

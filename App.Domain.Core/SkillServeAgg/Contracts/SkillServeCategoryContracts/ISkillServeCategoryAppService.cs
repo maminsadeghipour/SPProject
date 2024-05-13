@@ -11,6 +11,7 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
         Task<UpdateSkillServeCategoryDto> UpdateGetById(int id, CancellationToken cancellationToken);
         Task Update(UpdateSkillServeCategoryDto category, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+        Task<List<TitleSkillServeCategoryModelView>> GetTitles(CancellationToken cancellationToken);
     }
 }
 

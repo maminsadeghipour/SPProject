@@ -1,14 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+using App.Domain.Core.SkillServeAgg.Entity;
 
-namespace App.Domain.Core.SkillServeAgg.ModelViews
+namespace App.Domain.Core.SkillServeAgg.DTOs
 {
-	public class AddSkillServeModelView
-	{
-		public AddSkillServeModelView()
+	public class UpdateSkillServeDto
+    {
+		public UpdateSkillServeDto()
 		{
 		}
 
+        public int Id { get; set; }
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "عنوان الزامی است")]
         public string Title { get; set; }
@@ -24,6 +27,7 @@ namespace App.Domain.Core.SkillServeAgg.ModelViews
         [Display(Name = "دسته بندی")]
         [Required(ErrorMessage = "دسته بندی الزامی است")]
         public int CategoryId { get; set; }
+        public SkillServeCategory? Category { get; set; }
     }
 }
 

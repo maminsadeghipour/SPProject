@@ -2,6 +2,7 @@
 using App.Domain.Core.RequestAgg.Entity;
 using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.Entity;
+using App.Domain.Core.SkillServeAgg.ModelViews;
 
 namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
 {
@@ -16,7 +17,7 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
         Task<UpdateSkillServeCategoryDto> UpdateGetById(int id, CancellationToken cancellationToken);
         Task Update(UpdateSkillServeCategoryDto category, CancellationToken cancellationToken);
 
-
+        Task<List<TitleSkillServeCategoryModelView>> GetTitles(CancellationToken cancellationToken);
 
         //Task Update(SkillServeCategory category, CancellationToken cancellationToken);
     }

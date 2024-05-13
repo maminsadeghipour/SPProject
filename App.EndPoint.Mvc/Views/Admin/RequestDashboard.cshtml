@@ -1,5 +1,5 @@
-﻿@using App.Domain.Core.SkillServeAgg.DTOs
-@model List<ShowDetalisSkillServeDto>
+﻿@using App.Domain.Core.RequestAgg.DTOs
+@model List<ShowDetailsRequestDto>
 @{
     Layout = "_AdminLayout";
 }
@@ -9,7 +9,7 @@
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
-            خدمات
+            درخواست
         </h4>
         <div class="app-ecommerce-category">
             <!-- Category List Table -->
@@ -19,42 +19,52 @@
                     <table class="table border-top">
                         <thead>
                             <tr>
-                                <th>خدمات</th>
-                                <th class="text-nowrap text-sm-end">تعداد متخصصان</th>
-                                <th class="text-nowrap text-sm-end">تعداد درخواست</th>
+                                <th>درخواست</th>
+                                <th class="text-nowrap text-sm-end">مشتری</th>
+                                <th class="text-nowrap text-sm-end">وضعیت</th>
+                                <th class="text-nowrap text-sm-end">خدمت</th>
+                                <th class="text-nowrap text-sm-end">تعداد پیشنهاد</th>
                                 <th class="text-lg-center">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach (var skill in Model)
+                            @foreach (var request in Model)
                             {
                                 <tr class="odd">
                                     <td class="sorting_1">
 
                                         <div class="d-flex flex-column">
-                                            <h6 class="text-body text-nowrap mb-0">@skill.Title</h6>
-                                            <small class="text-muted text-truncate d-none d-sm-block">@skill.Description</small>
+                                            <h6 class="text-body text-nowrap mb-0">@request.Title</h6>
+                                            <small class="text-muted text-truncate d-none d-sm-block">@request.Description</small>
                                         </div>
 
                                     </td>
                                     <td>
-                                        <div class="text-sm-end">@skill.NumberOfExperts</div>
+                                        <div class="text-sm-end">@request.CustomerName</div>
                                     </td>
                                     <td>
-                                        <div class="h6 mb-0 text-sm-end">@skill.NumberOfRequests</div>
+                                        <div class="h6 mb-0 text-sm-end">@request.RequestState</div>
                                     </td>
+                                    <td>
+                                        <div class="h6 mb-0 text-sm-end">@request.SkillServeTitle</div>
+                                    </td>
+                                    <td>
+                                        <div class="h6 mb-0 text-sm-end">@request.NumberOfBids</div>
+                                    </td>
+
                                     <td class="dtr-hidden">
                                         <div class="d-flex align-items-sm-center justify-content-sm-center">
-                                            <a class="btn btn-sm btn-icon delete-record me-2" asp-controller="Admin" asp-action="DeleteSkillServe" asp-route-id="@skill.Id">
+                                            <a class="btn btn-sm btn-icon delete-record me-2" asp-controller="Admin" asp-action="" asp-route-id="@request.Id">
                                                 <i class="ti ti-trash"></i>
                                             </a>
-                                            <a class="btn btn-sm btn-icon" asp-controller="Admin" asp-action="UpdateSkillServe" asp-route-id="@skill.Id">
+                                            <a class="btn btn-sm btn-icon" asp-controller="Admin" asp-action="" asp-route-id="@request.Id">
                                                 <i class="ti ti-edit"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+
 
                             }
 
@@ -68,3 +78,4 @@
     </div>
     <!-- / Content -->
 </div>
+

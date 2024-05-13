@@ -1,5 +1,6 @@
 ﻿using System;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
+using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.Entity;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 
         public async Task<SkillServe> GetById(int id, CancellationToken cancellationToken)
         {
-            var skill = await _context.SkillServes.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            var skill = await _context.SkillServes.AsNoTracking().Include(s => s.Category).FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted, cancellationToken);
             if (skill != null)
                 return skill;
             throw new Exception($"Skilskill with id {id} did not found");
@@ -63,6 +64,44 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task Update(UpdateSkillServeDto skill, CancellationToken cancellationToken)
+        {
+            var skillInDatabse = await _context.SkillServes.FirstOrDefaultAsync(s => s.Id == skill.Id && !s.IsDeleted, cancellationToken);
+
+            if(skillInDatabse == null)
+                throw new Exception($"SkillServe with id {skill.Id} did not found");
+
+            if (skill.Title != null)
+                skillInDatabse.Title = skill.Title;
+            if (skill.Description != null)
+                skillInDatabse.Description = skill.Description;
+            if (skill.MinWage != 0 && skill.MinWage > 0)
+                skillInDatabse.MinWage = skill.MinWage;
+            if (skill.CategoryId != 0)
+                skillInDatabse.CategoryId = skill.CategoryId;
+            
+            skillInDatabse.LastUpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+
+
+        public async Task<List<ShowDetalisSkillServeDto>> GetSkillServesWithDetails(CancellationToken cancellationToken)
+            => await _context.SkillServes
+                .Where(s => !s.IsDeleted)
+                .Select(s =>
+                        new ShowDetalisSkillServeDto()
+                        {
+                            Id = s.Id,
+                            Title = s.Title,
+                            Description = s.Description,
+                            NumberOfExperts = s.Experts.Where(e => !e.IsDeleted).Count(),
+                            NumberOfRequests = s.Requests.Count()
+                        }
+                        ).ToListAsync(cancellationToken);
+
         #endregion
 
 
@@ -71,13 +110,17 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         #region Privates
         private async Task<SkillServe> GetSkillServeById(int id, CancellationToken cancellationToken)
         {
-            var skill = await _context.SkillServes.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            var skill = await _context.SkillServes.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (skill != null)
                 return skill;
             throw new Exception($"SkillServe with id {id} did not found");
         }
 
-       
+        
+        
+
+
+
 
         #endregion
     }

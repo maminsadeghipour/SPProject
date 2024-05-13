@@ -2,6 +2,7 @@
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
 using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.Entity;
+using App.Domain.Core.SkillServeAgg.ModelViews;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -105,7 +106,18 @@ namespace App.Infrastructure.Repository.SkillServeAgg
                             NumberOfRequest = ct.SkillServes.SelectMany(s=>s.Requests).Count()
                         }
                         ).ToListAsync(cancellationToken);
-              
+
+        public async Task<List<TitleSkillServeCategoryModelView>> GetTitles(CancellationToken cancellationToken)
+            => await _context.SkillServeCategories
+                    .Where(ct => !ct.IsDeleted)
+                    .Select(ct =>
+                        new TitleSkillServeCategoryModelView()
+                        {
+                            Id = ct.Id,
+                            Title = ct.Title
+                        }
+                    ).ToListAsync(cancellationToken);
+         
 
         #endregion
 
@@ -124,6 +136,7 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         }
 
         
+
 
 
 
