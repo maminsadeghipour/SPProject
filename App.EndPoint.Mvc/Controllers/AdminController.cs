@@ -51,8 +51,8 @@ namespace App.EndPoint.Mvc.Controllers
 
         public async Task<IActionResult> SkillServesCategoryDashboard(CancellationToken cancellationToken)
         {
-            var categoryWithDetails = await _skillServeCategoryAppService.GetCategoriesWithDetails(cancellationToken);
-            return View(categoryWithDetails);
+            var categories = await _skillServeCategoryAppService.GetCategoriesWithDetails(cancellationToken);
+            return View(categories);
         }
 
         public async Task<IActionResult> RequestDashboard(CancellationToken cancellationToken)

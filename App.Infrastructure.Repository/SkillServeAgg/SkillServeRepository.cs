@@ -4,6 +4,7 @@ using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.Entity;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Repository.SkillServeAgg
 {
@@ -12,13 +13,15 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         
         #region Fields
         private readonly AppDbContext _context;
+        private readonly ILogger<SkillServeRepository> _logger;
 
         #endregion
 
         #region Constructors
-        public SkillServeRepository(AppDbContext context)
+        public SkillServeRepository(AppDbContext context, ILogger<SkillServeRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         #endregion
@@ -35,6 +38,8 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         {
             await _context.SkillServes.AddAsync(skill, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+            var Title = skill.Title;
+            _logger.LogInformation($"SkillServe {Title} Added");
         }
 
         public async Task DeleteById(int id, CancellationToken cancellationToken)
@@ -42,6 +47,9 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             var skill = await GetSkillServeById(id, cancellationToken);
             skill.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
+
+            var Title = skill.Title;
+            _logger.LogInformation($"SkillServe {Title} Deleted");
         }
 
         public async Task<SkillServe> GetById(int id, CancellationToken cancellationToken)
@@ -63,6 +71,8 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             skillInDatabse.LastUpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync(cancellationToken);
+
+           
         }
 
         public async Task Update(UpdateSkillServeDto skill, CancellationToken cancellationToken)
@@ -84,6 +94,9 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             skillInDatabse.LastUpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            var Title = skill.Title;
+            _logger.LogInformation($"SkillServe {Title} Updated");
         }
 
 
@@ -113,7 +126,10 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             var skill = await _context.SkillServes.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (skill != null)
                 return skill;
-            throw new Exception($"SkillServe with id {id} did not found");
+
+            var ex = new Exception($"SkillServe with id {id} did not found");
+            _logger.LogError(ex, ex.Message);
+            throw ex;
         }
 
         

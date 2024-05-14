@@ -5,6 +5,7 @@ using App.Domain.Core.SkillServeAgg.Entity;
 using App.Domain.Core.SkillServeAgg.ModelViews;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Repository.SkillServeAgg
 {
@@ -14,13 +15,14 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 
         #region Fields
         private readonly AppDbContext _context;
-
+        private readonly ILogger<SkillServeCategoryRepository> _logger;
         #endregion
 
         #region Constructors
-        public SkillServeCategoryRepository(AppDbContext context)
+        public SkillServeCategoryRepository(AppDbContext context, ILogger<SkillServeCategoryRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         #endregion
@@ -52,9 +54,17 @@ namespace App.Infrastructure.Repository.SkillServeAgg
                 categoryInDatabase.LastUpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync(cancellationToken);
+
+                var Title = category.Title;
+                _logger.LogInformation($"SkillServeCategory {Title} Updated");
             }
             else
-                throw new Exception($"SkilCategory with id {category.Id} did not found");
+            {
+                var ex =  new Exception($"SkilCategory with id {category.Id} did not found");
+                _logger.LogError(ex,ex.Message);
+                throw ex;
+            }
+                
             
         }
 
@@ -63,6 +73,9 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         {
             await _context.SkillServeCategories.AddAsync(category,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
+            var Title = category.Title;
+            _logger.LogInformation($"SkillServeCategory {Title} Added");
         }
 
         public async Task DeleteById(int id, CancellationToken cancellationToken)
@@ -70,6 +83,9 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             var category = await GetSkillServeCategoryById(id, cancellationToken);
             category.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);
+
+            var Title = category.Title;
+            _logger.LogInformation($"SkillServeCategory {Title} Deleted");
         }
 
         public async Task<SkillServeCategory> GetById(int id, CancellationToken cancellationToken)
@@ -77,7 +93,9 @@ namespace App.Infrastructure.Repository.SkillServeAgg
             var category = await _context.SkillServeCategories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (category != null)
                 return category;
-            throw new Exception($"SkilCategory with id {id} did not found");
+            var ex =  new Exception($"SkilCategory with id {id} did not found");
+            _logger.LogError(ex, ex.Message);
+            throw ex;
         }
 
 

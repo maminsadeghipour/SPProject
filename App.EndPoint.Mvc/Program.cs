@@ -1,4 +1,3 @@
-
 using Serilog;
 using App.Domain.AppService.CustomerAgg;
 using App.Domain.AppService.ExpertAgg;
@@ -20,9 +19,15 @@ using App.Infrastructure.Repository.CustomerAgg;
 using App.Infrastructure.Repository.ExpertAgg;
 using App.Infrastructure.Repository.RequestAgg;
 using App.Infrastructure.Repository.SkillServeAgg;
-
+using App.Domain.Core.CacheAgg.Contracts;
+using App.Infrastructure.RedisCacheService.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMemoryCache();
+builder.Services.AddControllersWithViews();
+
+#region Logg
 
 // Add SeriLog
 builder.Host.ConfigureLogging(loggingBuilder =>
@@ -37,13 +42,23 @@ builder.Host.ConfigureLogging(loggingBuilder =>
     
 
 });
-   
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+#endregion
+   
+
+#region DbContext
 builder.Services.AddDbContext<AppDbContext>();
 
+#endregion
 
+builder.Services.AddStackExchangeRedisCache(option =>
+{
+    option.Configuration = builder.Configuration.GetConnectionString("localhost:6379");
+    option.InstanceName = "SPProjectCatalog_";
+
+});
+
+#region IoC Containers
 
 builder.Services.AddScoped<IExpertAppService, ExpertAppService>();
 builder.Services.AddScoped<IExpertService, ExpertService>();
@@ -66,6 +81,11 @@ builder.Services.AddScoped<ISkillServeCategoryService,    SkillServeCategoryServ
 builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepository>();
 
 builder.Services.AddScoped<IEnumService, EnumService>();
+
+builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+#endregion
+
 
 
 var app = builder.Build();

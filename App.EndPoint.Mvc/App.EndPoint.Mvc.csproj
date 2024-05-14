@@ -37,5 +37,8 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
 
+    <ProjectReference Include="..\App.Infrastructure.RedisCacheService\App.Infrastructure.RedisCacheService.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

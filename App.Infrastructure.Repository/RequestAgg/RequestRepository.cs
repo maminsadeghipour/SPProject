@@ -4,6 +4,7 @@ using App.Domain.Core.RequestAgg.DTOs;
 using App.Domain.Core.RequestAgg.Entity;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Repository.RequestAgg
 {
@@ -12,18 +13,20 @@ namespace App.Infrastructure.Repository.RequestAgg
 
         #region Fields
         private readonly AppDbContext _context;
-
+        private readonly ILogger<RequestRepository> _logger;
         #endregion
 
         #region Constructors
-        public RequestRepository(AppDbContext context)
+        public RequestRepository(AppDbContext context, ILogger<RequestRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         #endregion
 
         #region Implementations
+
         public async Task<List<Request>> GetAll(CancellationToken cancellationToken)
             => await _context.Requests.AsNoTracking().ToListAsync(cancellationToken);
 
@@ -78,7 +81,10 @@ namespace App.Infrastructure.Repository.RequestAgg
             var request = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted , cancellationToken);
             if (request != null)
                 return request;
-            throw new Exception($"Request with id {id} did not found");
+
+            var ex = new Exception($"Request with id {id} did not found");
+            _logger.LogError(ex, ex.Message);
+            throw ex;
         }
 
         public async Task Update(UpdateRequestDto request, CancellationToken cancellationToken)
@@ -90,6 +96,8 @@ namespace App.Infrastructure.Repository.RequestAgg
             requestInDatabase.LastUpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync(cancellationToken);
+            
+            _logger.LogInformation($"Request {request.Id} {request.Title} Updated");
         }
         #endregion
 
