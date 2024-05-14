@@ -22,4 +22,7 @@
     <Folder Include="RequestAgg\" />
     <Folder Include="SkillServeAgg\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
+  </ItemGroup>
 </Project>

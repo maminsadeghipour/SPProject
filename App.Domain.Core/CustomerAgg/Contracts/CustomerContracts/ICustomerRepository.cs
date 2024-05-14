@@ -11,6 +11,8 @@ namespace App.Domain.Core.CustomerAgg.Contracts.CustomerContracts
         Task<Customer> GetById(int id, CancellationToken cancellationToken);
         Task Update(Customer customer, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> Count(CancellationToken cancellationToken);
     }
 }
 

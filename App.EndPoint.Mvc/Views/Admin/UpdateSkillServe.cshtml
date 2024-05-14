@@ -1,0 +1,74 @@
+﻿@using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
+@inject ISkillServeCategoryAppService categoryAppService
+@using App.Domain.Core.SkillServeAgg.DTOs
+@model UpdateSkillServeDto
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="py-3 mb-4">
+            ویرایش کردن خدمت
+        </h4>
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">خدمت‌</h5>
+                        <small class="text-muted float-end">ویرایش کردن</small>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" asp-controller="Admin" asp-action="UpdateSkillServe">
+                            <div hidden class="mb-3">
+                                <label  class="form-label" asp-for="Id"></label>
+                                <input readonly class="form-control" asp-for="Id" />                                
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Title"></label>
+                                <input class="form-control" asp-for="Title" placeholder="خدمت‌" type="text" />
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Description"></label>
+                                <textarea class="form-control" asp-for="Description" placeholder="توضیحات خدمت‌ را وارد کنید"></textarea>
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="CategoryId"></label>
+                                @*selectpicker w-100*@
+                                <select class="form-select selectpicker w-100" data-style="btn-default" asp-for="CategoryId">
+                                    <option value="@Model.CategoryId">@Model.Category.Title</option>
+                                    @foreach (var category in await categoryAppService.GetTitles(new CancellationToken()))
+                                    {
+                                        <option value="@category.Id">@category.Title</option>
+
+                                    }
+                                </select>
+                                <span class="text-danger" asp-validation-for="CategoryId"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="MinWage"></label>
+                                <input class="form-control" asp-for="MinWage" placeholder=" حداقل دستمزد‌ را وارد کنید" type="number">
+                                <span class="text-danger" asp-validation-for="MinWage"></span>
+                            </div>
+                            <button class="btn btn-primary" type="submit">تایید</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

@@ -3,7 +3,7 @@ namespace App.Domain.Core.RequestAgg.Enum
 {
 	public enum RequestSate
 	{
-		Added,
+		Added = 1,
 		WaitingForBids,
 		WaitingForAcceptABidByCustomer,
 		WaitingToExpertServeToCostumer,
@@ -12,5 +12,6 @@ namespace App.Domain.Core.RequestAgg.Enum
 		DeniedByAdmin,
 		BannedByAdmin
   	}
+
 }
 
