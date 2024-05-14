@@ -26,6 +26,11 @@ namespace App.Domain.AppService.RequestAgg
         public async Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken)
             => await _requestService.GetAllRequestsWithDetails(cancellationToken);
 
+        public async Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken)
+            => await _requestService.GetUpdateDtoById(id, cancellationToken);
+
+        public async Task Update(UpdateRequestDto request, CancellationToken cancellationToken)
+            => await _requestService.Update(request, cancellationToken);
         #endregion
     }
 }

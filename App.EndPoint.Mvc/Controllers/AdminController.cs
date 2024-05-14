@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Domain.Core.EnumAgg.Contracts;
 using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
 using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
+using App.Domain.Core.RequestAgg.DTOs;
+using App.Domain.Core.RequestAgg.Enum;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Core.SkillServeAgg.DTOs;
@@ -21,6 +24,7 @@ namespace App.EndPoint.Mvc.Controllers
         private readonly ISkillServeCategoryAppService _skillServeCategoryAppService;
         private readonly ISkillServeAppService _skillServeAppService;
         private readonly IRequestAppService _requestAppService;
+        
 
         public AdminController(IExpertAppService expertAppService, ISkillServeCategoryAppService skillServeCategoryAppService,
             ISkillServeAppService skillServeAppService, IRequestAppService requestAppService)
@@ -28,7 +32,7 @@ namespace App.EndPoint.Mvc.Controllers
             _expertAppService = expertAppService;
             _skillServeCategoryAppService = skillServeCategoryAppService;
             _skillServeAppService = skillServeAppService;
-            _requestAppService = requestAppService;
+            _requestAppService = requestAppService;            
         }
 
         // GET: /<controller>/
@@ -52,7 +56,7 @@ namespace App.EndPoint.Mvc.Controllers
         }
 
         public async Task<IActionResult> RequestDashboard(CancellationToken cancellationToken)
-        {
+        {            
             var requests = await _requestAppService.GetAllRequestsWithDetails(cancellationToken);
             return View(requests);
         }
@@ -135,10 +139,16 @@ namespace App.EndPoint.Mvc.Controllers
 
 
         // Request Detail
-        public async Task<IActionResult> RequestDetails(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateRequest(int id,CancellationToken cancellationToken)
+        {            
+            var request = await _requestAppService.GetUpdateDtoById(id, cancellationToken);
+            return View(request);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateRequest(UpdateRequestDto request, CancellationToken cancellationToken)
         {
-
-            return View();
+            await _requestAppService.Update(request, cancellationToken);
+            return RedirectToAction(nameof(RequestDashboard));
         }
 
 

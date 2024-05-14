@@ -42,6 +42,8 @@
     <None Remove="SkillServeAgg\ModelViews\" />
     <None Remove="SkillServeAgg\DTOs\" />
     <None Remove="RequestAgg\DTOs\" />
+    <None Remove="EnumAgg\" />
+    <None Remove="EnumAgg\Contracts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -79,5 +81,7 @@
     <Folder Include="SkillServeAgg\ModelViews\" />
     <Folder Include="SkillServeAgg\DTOs\" />
     <Folder Include="RequestAgg\DTOs\" />
+    <Folder Include="EnumAgg\" />
+    <Folder Include="EnumAgg\Contracts\" />
   </ItemGroup>
 </Project>

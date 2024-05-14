@@ -43,6 +43,22 @@ namespace App.Infrastructure.Repository.RequestAgg
                                     SkillServeTitle = r.SkillServe.Title   
                                 }).ToListAsync(cancellationToken);
 
+        public async Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken)
+        {
+            var request = await _context.Requests.Select(r => new UpdateRequestDto()
+                                        {
+                                            Id = r.Id,
+                                            Title = r.Title,
+                                            Description = r.Description,
+                                            RequestState = r.RequestState
+                                        }).FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+            if (request != null)
+                return request;
+
+            throw new Exception($"Request with id {id} did not found");
+        }
+           
+            
 
         public async Task Add(Request request, CancellationToken cancellationToken)
         {
@@ -65,7 +81,7 @@ namespace App.Infrastructure.Repository.RequestAgg
             throw new Exception($"Request with id {id} did not found");
         }
 
-        public async Task Update(Request request, CancellationToken cancellationToken)
+        public async Task Update(UpdateRequestDto request, CancellationToken cancellationToken)
         {
             var requestInDatabase = await GetRequestById(request.Id, cancellationToken);
 
@@ -84,13 +100,15 @@ namespace App.Infrastructure.Repository.RequestAgg
         #region Privates
         private async Task<Request> GetRequestById(int id, CancellationToken cancellationToken)
         {
-            var request = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+            var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
             if (request != null)
                 return request;
             throw new Exception($"Request with id {id} did not found");
         }
 
         
+
+
 
         #endregion
     }

@@ -1,0 +1,68 @@
+﻿@using App.Domain.Core.EnumAgg.Contracts
+@using App.Domain.Core.RequestAgg.Enum
+@using App.Domain.Core.RequestAgg.DTOs
+@inject IEnumService enumService
+@model UpdateRequestDto
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="py-3 mb-4">
+            ویرایش کردن وضعیت درخواست
+        </h4>
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">درخواست‌</h5>
+                        <small class="text-muted float-end">ویرایش کردن</small>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" asp-controller="Admin" asp-action="UpdateRequest">
+                            <div hidden class="mb-3">
+                                <label class="form-label" asp-for="Id"></label>
+                                <input readonly class="form-control" asp-for="Id" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Title"></label>
+                                <input readonly class="form-control" asp-for="Title" placeholder="‌" type="text" />
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Description"></label>
+                                <textarea readonly class="form-control" asp-for="Description"></textarea>
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="RequestState"></label>
+                                @*selectpicker w-100*@
+                                <select class="form-select selectpicker w-100" data-style="btn-default" asp-for="RequestState">
+                                    <option value="@Model.RequestState">@Model.RequestState</option>
+                                    @foreach (var state in enumService.GetValues<RequestSate>())
+                                    {
+                                        <option value="@state">@state</option>
+
+                                    }
+                                </select>
+                                <span class="text-danger" asp-validation-for="RequestState"></span>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">تایید</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
