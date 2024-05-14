@@ -7,6 +7,9 @@ namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
 	{
         Task<int> Count(CancellationToken cancellationToken);
         Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken);
+        Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken);
+        Task Update(UpdateRequestDto request, CancellationToken cancellationToken);
+
     }
 }
 

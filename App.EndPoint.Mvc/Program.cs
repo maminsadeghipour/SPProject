@@ -3,11 +3,13 @@ using App.Domain.AppService.ExpertAgg;
 using App.Domain.AppService.RequestAgg;
 using App.Domain.AppService.SkillServeAgg;
 using App.Domain.Core.CustomerAgg.Contracts.CustomerContracts;
+using App.Domain.Core.EnumAgg.Contracts;
 using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
 using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Service.CustomerAgg;
+using App.Domain.Service.EnumAgg;
 using App.Domain.Service.ExpertAgg;
 using App.Domain.Service.RequestAgg;
 using App.Domain.Service.SkillServeAgg;
@@ -47,6 +49,7 @@ builder.Services.AddScoped<ISkillServeCategoryAppService, SkillServeCategoryAppS
 builder.Services.AddScoped<ISkillServeCategoryService,    SkillServeCategoryService>();
 builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepository>();
 
+builder.Services.AddScoped<IEnumService, EnumService>();
 
 
 var app = builder.Build();

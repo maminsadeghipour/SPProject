@@ -55,10 +55,10 @@
 
                                     <td class="dtr-hidden">
                                         <div class="d-flex align-items-sm-center justify-content-sm-center">
-                                            <a class="btn btn-sm btn-icon delete-record me-2" asp-controller="Admin" asp-action="" asp-route-id="@request.Id">
+                                            @*<a class="btn btn-sm btn-icon delete-record me-2" asp-controller="Admin" asp-action="" asp-route-id="@request.Id">
                                                 <i class="ti ti-trash"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-icon" asp-controller="Admin" asp-action="" asp-route-id="@request.Id">
+                                            </a>*@
+                                            <a class="btn btn-sm btn-icon" asp-controller="Admin" asp-action="UpdateRequest" asp-route-id="@request.Id">
                                                 <i class="ti ti-edit"></i>
                                             </a>
                                         </div>
