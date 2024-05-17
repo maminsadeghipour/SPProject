@@ -29,23 +29,23 @@ namespace App.Domain.AppService.SkillServeAgg
 
 
         #region Implementations
-        //public async Task<List<ShowDetailsSkillCategoryDto>> GetCategoriesWithDetails(CancellationToken cancellationToken)
-        //{
-        //    List<ShowDetailsSkillCategoryDto> categoriesWithDetail = await _redisCacheService.Get<List<ShowDetailsSkillCategoryDto>>("categoriesWithDetail", cancellationToken);
-
-        //    if (categoriesWithDetail != null)
-        //        return categoriesWithDetail;
-
-        //    categoriesWithDetail = await _skillServeCategoryService.GetCategoriesWithDetails(cancellationToken);
-
-        //    await _redisCacheService.Set("categoriesWithDetail", categoriesWithDetail, 1, cancellationToken);
-
-        //    return categoriesWithDetail;
-
-        //}
-
         public async Task<List<ShowDetailsSkillCategoryDto>> GetCategoriesWithDetails(CancellationToken cancellationToken)
-            => await _skillServeCategoryService.GetCategoriesWithDetails(cancellationToken);
+        {
+            List<ShowDetailsSkillCategoryDto> categoriesWithDetail = await _redisCacheService.Get<List<ShowDetailsSkillCategoryDto>>("categoriesWithDetail", cancellationToken);
+
+            if (categoriesWithDetail != null)
+                return categoriesWithDetail;
+
+            categoriesWithDetail = await _skillServeCategoryService.GetCategoriesWithDetails(cancellationToken);
+
+            await _redisCacheService.Set("categoriesWithDetail", categoriesWithDetail, 1, cancellationToken);
+
+            return categoriesWithDetail;
+
+        }
+
+        //public async Task<List<ShowDetailsSkillCategoryDto>> GetCategoriesWithDetails(CancellationToken cancellationToken)
+        //    => await _skillServeCategoryService.GetCategoriesWithDetails(cancellationToken);
 
 
         public async Task Add(AddSkillServeCategoryModelView categoryModelView, CancellationToken cancellationToken)

@@ -16,6 +16,7 @@ namespace App.Domain.Core.FeedBackAgg.Entity
 		public string Description { get; set; }
         //[AllowNull]
         public int? Rate { get; set; }
+        public bool IsAcceptedByAdmin { get; set; }
 
         // Developing Entity 
         public DateTime CreatedAt { get; set; }

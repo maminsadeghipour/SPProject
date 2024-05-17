@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Domain.Core.EnumAgg.Contracts;
 using App.Domain.Core.ExpertAgg.Contracts.ExpertContract;
+using App.Domain.Core.FeedBackAgg.Contracts;
 using App.Domain.Core.RequestAgg.Contracts.RequestContracts;
 using App.Domain.Core.RequestAgg.DTOs;
 using App.Domain.Core.RequestAgg.Enum;
@@ -24,15 +25,18 @@ namespace App.EndPoint.Mvc.Controllers
         private readonly ISkillServeCategoryAppService _skillServeCategoryAppService;
         private readonly ISkillServeAppService _skillServeAppService;
         private readonly IRequestAppService _requestAppService;
-        
+        private readonly ICustomerFeedbackAppService _customerFeedbackAppService;
+
 
         public AdminController(IExpertAppService expertAppService, ISkillServeCategoryAppService skillServeCategoryAppService,
-            ISkillServeAppService skillServeAppService, IRequestAppService requestAppService)
+            ISkillServeAppService skillServeAppService, IRequestAppService requestAppService,
+            ICustomerFeedbackAppService customerFeedbackAppService)
         {
             _expertAppService = expertAppService;
             _skillServeCategoryAppService = skillServeCategoryAppService;
             _skillServeAppService = skillServeAppService;
-            _requestAppService = requestAppService;            
+            _requestAppService = requestAppService;
+            _customerFeedbackAppService = customerFeedbackAppService;
         }
 
         // GET: /<controller>/
@@ -59,6 +63,12 @@ namespace App.EndPoint.Mvc.Controllers
         {            
             var requests = await _requestAppService.GetAllRequestsWithDetails(cancellationToken);
             return View(requests);
+        }
+
+        public async Task<IActionResult> CustomerFeedbackDashboard(CancellationToken cancellationToken)
+        {
+            var feedbacks = await _customerFeedbackAppService.GetAllFeedbackWithDetails(cancellationToken);
+            return View(feedbacks);
         }
 
 
@@ -150,6 +160,20 @@ namespace App.EndPoint.Mvc.Controllers
             await _requestAppService.Update(request, cancellationToken);
             return RedirectToAction(nameof(RequestDashboard));
         }
+
+        // Customer Feedbacks
+        public async Task<IActionResult> DenyCustomerFeedback(int id, CancellationToken cancellationToken)
+        {
+            await _customerFeedbackAppService.UpdateIsAcceptedByAdmin(id, false, cancellationToken);
+            return RedirectToAction(nameof(CustomerFeedbackDashboard));
+        }
+
+        public async Task<IActionResult> AcceptCustomerFeedback(int id, CancellationToken cancellationToken)
+        {
+            await _customerFeedbackAppService.UpdateIsAcceptedByAdmin(id, true, cancellationToken);
+            return RedirectToAction(nameof(CustomerFeedbackDashboard));
+        }
+
 
 
     }

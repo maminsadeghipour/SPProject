@@ -16,15 +16,23 @@ namespace App.Infrastructure.RedisCacheService.Redis
 
         public async Task<T> Get<T>(string key, CancellationToken cancellationToken)
         {
-            string? value = await _distributedCache.GetStringAsync(key ,cancellationToken);
-
-
-            if (value != null)
+            try
             {
-                return JsonSerializer.Deserialize<T>(value);
-            }
+                string? value = await _distributedCache.GetStringAsync(key, cancellationToken);
 
+
+                if (value != null)
+                {
+                    return JsonSerializer.Deserialize<T>(value);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
             return default;
+            
+
         }
 
         public async Task Set<T>(string key, T value, int expTimeInHour, CancellationToken cancellationToken)

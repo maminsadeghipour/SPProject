@@ -4,6 +4,7 @@ using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517063705_FeedbackAcceptedByAdminProperty")]
+    partial class FeedbackAcceptedByAdminProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,7 +276,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(7200),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(4970),
                             IsDeleted = false,
                             Password = "admin",
                             Username = "admin"
@@ -330,13 +333,13 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 471, DateTimeKind.Local).AddTicks(7910),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 459, DateTimeKind.Local).AddTicks(2420),
                             FirstName = "Ali",
                             IsDeleted = false,
                             LastName = "Alizadeh",
                             Password = "1234",
                             PhoneNumber = "09121234567",
-                            RegisteredAt = new DateTime(2024, 5, 17, 10, 8, 3, 471, DateTimeKind.Local).AddTicks(7870),
+                            RegisteredAt = new DateTime(2024, 5, 17, 10, 7, 4, 459, DateTimeKind.Local).AddTicks(2120),
                             Username = "Ali.Alizadeh"
                         });
                 });
@@ -396,13 +399,13 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 1,
                             BankAccount = "6362141111223344",
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 472, DateTimeKind.Local).AddTicks(3690),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 459, DateTimeKind.Local).AddTicks(6700),
                             FirstName = "Mohmad",
                             IsDeleted = false,
                             LastName = "Sadeghi",
                             Password = "1234",
                             PhoneNumber = "09123215476",
-                            RegisteredAt = new DateTime(2024, 5, 17, 10, 8, 3, 472, DateTimeKind.Local).AddTicks(3680),
+                            RegisteredAt = new DateTime(2024, 5, 17, 10, 7, 4, 459, DateTimeKind.Local).AddTicks(6690),
                             Username = "m.sadeghi"
                         });
                 });
@@ -427,11 +430,6 @@ namespace App.Infrastructure.DataAccess.Migrations
 
                     b.Property<int>("ExpertId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsAcceptedByAdmin")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -622,7 +620,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2660),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1810),
                             Description = "نظافت منزل با بهترین امکانات",
                             IsDeleted = false,
                             MinWage = 400000,
@@ -632,7 +630,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1850),
                             Description = "قالی های خود را به ما بسپارید",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -642,7 +640,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1860),
                             Description = "سردته؟ با یه درخواست سیستم گرمایشتو درست کن",
                             IsDeleted = false,
                             MinWage = 500000,
@@ -652,7 +650,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1860),
                             Description = "خسته شدی از اینکه ساختمانت درست نیست راه حلش پیش ماست",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -662,7 +660,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 5,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1860),
                             Description = "دیگه نگران خراب شدن یخچالت نباش",
                             IsDeleted = false,
                             MinWage = 400000,
@@ -672,7 +670,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 6,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1860),
                             Description = "ماشین لباسشوییت لباساتو خوب تمیز نمیکنه ؟ درخواست بده",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -682,7 +680,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 7,
                             CategoryId = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1870),
                             Description = "تعمیر کارا ماشینتو جواب کردن ؟ اینجا درستش کن ",
                             IsDeleted = false,
                             MinWage = 600000,
@@ -692,7 +690,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 8,
                             CategoryId = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1870),
                             Description = "با همسرت سره کثیفی ماشین دعواتون شده ؟ اشکال نداره ما براتون مشکلتونو حل میکنیم",
                             IsDeleted = false,
                             MinWage = 150000,
@@ -702,7 +700,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 9,
                             CategoryId = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1870),
                             Description = "دیگه اگه موبایلت درست کار نکنه چه جوری می خوای زندگی کنی",
                             IsDeleted = false,
                             MinWage = 600000,
@@ -712,7 +710,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 10,
                             CategoryId = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1870),
                             Description = "حوصله نداری تا مغازه بری ما میاییم پیشت",
                             IsDeleted = false,
                             MinWage = 500000,
@@ -722,7 +720,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 11,
                             CategoryId = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1880),
                             Description = "می خوای نقل مکان کنی ؟ ما برات  بسته  بندی  و انجام میدیم",
                             IsDeleted = false,
                             MinWage = 200000,
@@ -732,7 +730,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 12,
                             CategoryId = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(1880),
                             Description = "می خوای نقل مکان کنی ؟ ما برات انجام میدیم",
                             IsDeleted = false,
                             MinWage = 700000,
@@ -775,7 +773,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5250),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3780),
                             Description = "ارئه خدمات مربوط به نظافت منزل و ...",
                             IsDeleted = false,
                             Title = "نظافت"
@@ -783,7 +781,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3790),
                             Description = "خدمات مربوط به ساختمان و..",
                             IsDeleted = false,
                             Title = "ساختمان"
@@ -791,7 +789,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3800),
                             Description = "تعمیرات یخچال و ...",
                             IsDeleted = false,
                             Title = "تعمیرات اشیا"
@@ -799,7 +797,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3800),
                             Description = "خدمات مربوط به خودرو تعمیرات و ...",
                             IsDeleted = false,
                             Title = "خودرو"
@@ -807,7 +805,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3800),
                             Description = "تعمیرات موبایل و تجهیزات الکترونیک",
                             IsDeleted = false,
                             Title = "الکترونیک"
@@ -815,7 +813,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5280),
+                            CreatedAt = new DateTime(2024, 5, 17, 10, 7, 4, 464, DateTimeKind.Local).AddTicks(3800),
                             Description = "خدمات مربوط به اسباب کشی ",
                             IsDeleted = false,
                             Title = "حمل و نقل"

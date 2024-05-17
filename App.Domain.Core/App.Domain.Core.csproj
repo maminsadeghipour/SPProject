@@ -46,6 +46,7 @@
     <None Remove="EnumAgg\Contracts\" />
     <None Remove="CacheAgg\" />
     <None Remove="CacheAgg\Contracts\" />
+    <None Remove="FeedBackAgg\DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -87,5 +88,6 @@
     <Folder Include="EnumAgg\Contracts\" />
     <Folder Include="CacheAgg\" />
     <Folder Include="CacheAgg\Contracts\" />
+    <Folder Include="FeedBackAgg\DTOs\" />
   </ItemGroup>
 </Project>

@@ -21,6 +21,10 @@ using App.Infrastructure.Repository.RequestAgg;
 using App.Infrastructure.Repository.SkillServeAgg;
 using App.Domain.Core.CacheAgg.Contracts;
 using App.Infrastructure.RedisCacheService.Redis;
+using App.Domain.Core.FeedBackAgg.Contracts;
+using App.Infrastructure.Repository.FeebackAgg;
+using App.Domain.Service.FeebackAgg;
+using App.Domain.AppService.FeebackAgg;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +57,7 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddStackExchangeRedisCache(option =>
 {
-    option.Configuration = builder.Configuration.GetConnectionString("localhost:6379");
+    option.Configuration = "localhost:6379";
     option.InstanceName = "SPProjectCatalog_";
 
 });
@@ -79,6 +83,10 @@ builder.Services.AddScoped<ISkillServeRepository, SkillServeRepository>();
 builder.Services.AddScoped<ISkillServeCategoryAppService, SkillServeCategoryAppService>();
 builder.Services.AddScoped<ISkillServeCategoryService,    SkillServeCategoryService>();
 builder.Services.AddScoped<ISkillServeCategoryRepository, SkillServeCategoryRepository>();
+
+builder.Services.AddScoped<ICustomerFeedbackRepository, CustomerFeedbackRepository>();
+builder.Services.AddScoped<ICustomerFeedbackService, CustomerFeedbackService>();
+builder.Services.AddScoped<ICustomerFeedbackAppService, CustomerFeedbackAppService>();
 
 builder.Services.AddScoped<IEnumService, EnumService>();
 

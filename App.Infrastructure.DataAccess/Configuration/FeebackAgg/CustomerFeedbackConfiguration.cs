@@ -24,6 +24,7 @@ namespace App.Infrastructure.DataAccess.Configuration.FeebackAgg
             builder.Property(c => c.LastUpdatedAt).IsRequired(false);
             builder.Property(c => c.CreatedAt).IsRequired();
             builder.Property(c => c.IsDeleted).IsRequired().HasDefaultValue(false);
+            builder.Property(c => c.IsAcceptedByAdmin).IsRequired().HasDefaultValue(true);
 
             builder.HasOne(c => c.Expert)
                 .WithMany(e => e.CostumerFeedbacks)
