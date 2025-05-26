@@ -12,12 +12,15 @@ using App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts;
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.ModelViews;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace App.EndPoint.Mvc.Controllers
 {
+
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 

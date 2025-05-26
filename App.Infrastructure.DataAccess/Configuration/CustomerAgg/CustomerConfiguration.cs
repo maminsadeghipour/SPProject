@@ -1,6 +1,7 @@
 ﻿
 using System;
 using App.Domain.Core.CustomerAgg.Entity;
+using App.Domain.Core.IdentityAgg.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,10 +21,11 @@ namespace App.Infrastructure.DataAccess.Configuration.CustomerAgg
 
             builder.Property(c => c.FirstName).IsRequired();
             builder.Property(c => c.LastName).IsRequired();
-            builder.Property(c => c.PhoneNumber).IsRequired();
-            builder.Property(c => c.Username).IsRequired();
-            builder.Property(c => c.Password).IsRequired();
             builder.Property(c => c.RegisteredAt).IsRequired();
+
+            //builder.Property(c => c.PhoneNumber).IsRequired();            
+            //builder.Property(e => e.Username).IsRequired();
+            //builder.Property(e => e.Password).IsRequired();
 
             builder.Property(c => c.LastUpdatedAt).IsRequired(false);
             builder.Property(c => c.CreatedAt).IsRequired();
@@ -44,13 +46,23 @@ namespace App.Infrastructure.DataAccess.Configuration.CustomerAgg
                 .HasForeignKey(cf => cf.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.HasOne(c => c.ApplicationUser)
+                .WithOne(a => a.Customer)
+                .OnDelete(DeleteBehavior.NoAction);
+
             #region SeedData
 
             builder.HasData(
-                new Customer() { Id = 1, FirstName = "Ali", LastName = "Alizadeh", Username = "Ali.Alizadeh",
-                Password = "1234", RegisteredAt = DateTime.Now, CreatedAt = DateTime.Now, PhoneNumber = "09121234567"}
-                );
-
+                new Customer()
+                {
+                    Id = 4,
+                    FirstName = "Maryam",
+                    LastName = "Maryam",                    
+                    RegisteredAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                    ApplicationUserId = 4
+                }
+                );            
             #endregion
 
         }

@@ -1,0 +1,75 @@
+﻿@using App.Domain.Core.RequestAgg.DTOs
+@using App.Domain.Core.AddressAgg.Entity;
+@model AddRequestDto
+@{
+    Layout = "_AppLayout";
+    var skillServeId = ViewBag.SkillServeId;
+    var customerAddresses = ViewBag.CustomerAddresses;
+}
+
+<form asp-controller="Customer" asp-action="AddRequest" role="form" method="post" enctype="multipart/form-data">
+    <div class="row with-forms">
+        <div class="col-md-12">
+            <label asp-for="Title"></label>
+            <input class="search-field" type="text" asp-for="Title" />
+        </div>
+    </div>
+
+    <div class="form">
+        <label asp-for="Description"></label>
+        <textarea class="WYSIWYG" cols="40" rows="3" id="summary" asp-for="Description"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Pictures" class="form-label"></label>
+        <input class="form-control" type="file" asp-for="Pictures">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeadLine" class="form-label"></label>
+        <input data-jdp  class="form-control data-jdp" type="" asp-for="DeadLine">
+    </div>
+
+    <div hidden class="mb-3">
+        <label asp-for="SkillServeId" class="form-label"></label>
+        <input readonly class="form-control" type="number" asp-for="SkillServeId" value="@skillServeId">
+    </div>
+
+    <label asp-for="AddressId"></label>
+    <select asp-for="AddressId" class="form-select" aria-label="Default select example">
+        <option selected>انتخاب کنید</option>
+        @foreach (var address in customerAddresses)
+        {
+            <option value="@address.Id">@address.Title</option>
+
+        }
+
+    </select>
+
+
+    <button type="submit" class="button preview">اضافه کردن</button>
+</form>
+
+
+@section Scripts {
+
+    <script>jalaliDatepicker.startWatch({
+minDate: "attr",
+maxDate: "attr",
+minTime: "attr",
+maxTime: "attr",
+hideAfterChange: true,
+autoHide: true,
+showTodayBtn: true,
+showEmptyBtn: true,
+topSpace: 10,
+bottomSpace: 30,
+dayRendering(opt, input) {
+return {
+isHollyDay: opt.day == 1
+}
+}
+});
+
+document.getElementById("aaa").addEventListener("jdp:change", function (e) { console.log(e) });</script>
+}

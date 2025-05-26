@@ -1,0 +1,23 @@
+﻿@using App.Domain.Core.IdentityAgg.DTOs
+@model LoginDto
+
+@{
+    Layout = "_AppLayout";
+}
+
+<form asp-controller="Account" asp-action="Login" method="post" >
+
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+    <div class="form-group">
+        <label asp-for="Email">Email address</label>
+        <input asp-for="Email" type="text" class="form-control" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" type="text" class="form-control" placeholder="Password">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

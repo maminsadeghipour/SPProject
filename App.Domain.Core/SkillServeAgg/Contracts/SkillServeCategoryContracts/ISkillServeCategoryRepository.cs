@@ -18,8 +18,7 @@ namespace App.Domain.Core.SkillServeAgg.Contracts.SkillServeCategoryContracts
         Task Update(UpdateSkillServeCategoryDto category, CancellationToken cancellationToken);
 
         Task<List<TitleSkillServeCategoryModelView>> GetTitles(CancellationToken cancellationToken);
-
-        //Task Update(SkillServeCategory category, CancellationToken cancellationToken);
+        
     }
 }
 

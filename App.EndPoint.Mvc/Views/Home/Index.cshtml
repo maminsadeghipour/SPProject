@@ -1,9 +1,36 @@
-﻿@{
+﻿@using App.Domain.Core.SkillServeAgg.ModelViews
+@model List<TitleSkillServeCategoryModelView>
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "_AppLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h3 class="headline centered margin-top-75">
+            دسته بندی های خدمات
+        </h3>
+    </div>
+
 </div>
 
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="categories-boxes-container margin-top-5 margin-bottom-30">
+
+            @foreach(var category in Model)
+{
+            <!-- Box -->
+            <a asp-controller="Home" asp-action="SkillServesByCategory" asp-route-categoryId="@category.Id" class="category-small-box">
+                <i class="im  im-icon-Sleeping"></i>
+                <h4>@category.Title</h4>                
+            </a>
+
+}
+
+        </div>
+    </div>
+</div>

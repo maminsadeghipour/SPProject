@@ -1,0 +1,35 @@
+﻿@using App.Domain.Core.AddressAgg.DTOs
+@using App.Domain.Core.AddressAgg.Contracts.CityContract
+@inject ICityAppService cityAppSerive
+@model AddAddressDto
+@{
+    Layout = "_AppLayout";
+
+}
+
+<form asp-controller="Customer" asp-action="AddAddress" method="post">
+    <div class="form-group">
+        <label asp-for="Title">عنوان</label>
+        <input asp-for="Title" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Street">خیابان</label>
+        <input asp-for="Street" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CityId">شهر</label>
+        <select asp-for="CityId" class="form-control" id="exampleFormControlSelect1">
+            <option>انتخاب کنید</option>
+            @foreach (var city in await cityAppSerive.GetAll(new CancellationToken()))
+            {
+
+                <option value="@city.Id">@city.Title</option>
+            }
+
+        </select>
+    </div>
+
+    <button type="submit" class="button preview">اضافه کردن</button>
+</form>

@@ -17,6 +17,7 @@ namespace App.Domain.AppService.RequestAgg
             _requestService = requestService;
         }
 
+        
         #endregion
 
         #region Implementations
@@ -31,6 +32,19 @@ namespace App.Domain.AppService.RequestAgg
 
         public async Task Update(UpdateRequestDto request, CancellationToken cancellationToken)
             => await _requestService.Update(request, cancellationToken);
+
+        public async Task AddRequest(int userApplicationId, AddRequestDto request, CancellationToken cancellationToken)
+            => await _requestService.AddRequest(userApplicationId, request, cancellationToken);
+
+        public async Task<List<ShowDetailsRequestDto>> GetRequestByUserId(int applicationUserId, CancellationToken cancellationToken)
+            => await _requestService.GetRequestByUserId(applicationUserId, cancellationToken);
+
+        public async Task<ShowDetailBidsRequestDto> GetReequestWithBids(int requestId, int applicationUserId, CancellationToken cancellationToken)
+            => await _requestService.GetReequestWithBids(requestId, applicationUserId, cancellationToken);
+
+        public async Task AcceptBid(int requestId, int bidId, CancellationToken cancellationToken)
+            => await _requestService.AcceptBid(requestId, bidId, cancellationToken);
+
         #endregion
     }
 }

@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using App.Domain.Core.IdentityAgg.Entity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Customer" asp-page="/Profile" title="پروفایل">@User.Identity?.Name</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Account" asp-page="Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">خروج</button>
+                </form>
+            </li>*@
+
+
+        <div class="header-widget">
+
+            <!-- User Menu -->
+            <div class="user-menu">
+                <div class="user-name"><span></span>@User.Identity?.Name</div>
+                <ul>
+                    <li><a asp-controller="Customer" asp-action="Profile"><i class="sl sl-icon-settings"></i>پروفایل</a></li>
+                    <li><a asp-controller="Customer" asp-action="UserRequests"><i class="sl sl-icon-envelope-open"></i>درخواست ها</a></li>
+                    @*<li><a ><i class="fa fa-calendar-check-o"></i> رزرو ها</a></li>*@
+                    <li><a asp-controller="Account" asp-action="" ><i class="sl sl-icon-power"></i> خروج</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    }
+    else
+    {
+        @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Account" asp-page="/Register">ثبت نام</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Account" asp-page="/Login">ورود</a>
+            </li>*@
+
+        <div class="right-side">
+            <div class="header-widget">
+                <a asp-controller="Account" asp-action="Login" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> ورود</a>
+                <a asp-controller="Account" asp-action="Register" class="button border with-icon">ثبت نام<i class="sl sl-icon-plus"></i></a>
+            </div>
+        </div>
+    }
+</ul>

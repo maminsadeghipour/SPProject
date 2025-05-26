@@ -33,6 +33,22 @@ namespace App.Infrastructure.Repository.RequestAgg
         public async Task<int> Count(CancellationToken cancellationToken)
             => await _context.Requests.Where(r => !r.IsDeleted).CountAsync(cancellationToken);
 
+        public async Task<int?> GetRequestAcceptedBidId(int id, CancellationToken cancellationToken)
+            => await _context.Requests.Where(r => r.Id == id).Select(r => r.AcceptedBidId).FirstAsync(cancellationToken);
+
+        public async Task<List<ShowDetailsRequestDto>> GetRequestByCustomerId(int customerId, CancellationToken cancellationToken)
+            => await _context.Requests.Where(r => !r.IsDeleted && r.CustomerId == customerId)
+                                .Select(r => new ShowDetailsRequestDto()
+                                {
+                                    Id = r.Id,
+                                    Title = r.Title,
+                                    CustomerName = r.Customer.FirstName + r.Customer.LastName,
+                                    Description = r.Description,
+                                    NumberOfBids = r.Bids.Count,
+                                    RequestState = r.RequestState,
+                                    SkillServeTitle = r.SkillServe.Title
+                                }).ToListAsync(cancellationToken);
+
         public async Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken)
             => await _context.Requests.Where(r => !r.IsDeleted)
                                 .Select(r => new ShowDetailsRequestDto()
@@ -45,6 +61,20 @@ namespace App.Infrastructure.Repository.RequestAgg
                                     RequestState = r.RequestState,
                                     SkillServeTitle = r.SkillServe.Title   
                                 }).ToListAsync(cancellationToken);
+
+        public async Task<ShowDetailBidsRequestDto> GetReequestWithBids(int requestId, int customerId, CancellationToken cancellationToken)
+            => await _context.Requests.Where(r => r.Id == requestId && r.CustomerId == customerId)
+                                .Select(r => new ShowDetailBidsRequestDto()
+                                {
+                                    Id = r.Id,
+                                    Title = r.Title,
+                                    AcceptedBidId = r.AcceptedBidId,
+                                    RequestState = r.RequestState,
+                                    SkillServeName = r.SkillServe.Title,
+                                    DeadLine = r.DeadLine,
+                                    Bids = r.Bids,
+                                    CreatedAt = r.CreatedAt
+                                }).FirstAsync(cancellationToken);
 
         public async Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken)
         {
@@ -65,8 +95,11 @@ namespace App.Infrastructure.Repository.RequestAgg
 
         public async Task Add(Request request, CancellationToken cancellationToken)
         {
+            
             await _context.Requests.AddAsync(request,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
+            
         }
 
         public async Task DeleteById(int id, CancellationToken cancellationToken)
@@ -78,7 +111,7 @@ namespace App.Infrastructure.Repository.RequestAgg
 
         public async Task<Request> GetById(int id, CancellationToken cancellationToken)
         {
-            var request = await _context.Requests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted , cancellationToken);
+            var request = await _context.Requests.AsNoTracking().Include(r=>r.Bids).FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted , cancellationToken);
             if (request != null)
                 return request;
 
@@ -99,6 +132,21 @@ namespace App.Infrastructure.Repository.RequestAgg
             
             _logger.LogInformation($"Request {request.Id} {request.Title} Updated");
         }
+
+        public async Task Update(Request request, CancellationToken cancellationToken)
+        {
+            var requestInDatabase = await GetRequestById(request.Id, cancellationToken);
+
+            requestInDatabase.RequestState = request.RequestState;
+
+            requestInDatabase.AcceptedBidId = request.AcceptedBidId;
+
+            requestInDatabase.LastUpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation($"Request {request.Id} {request.Title} Updated");
+        }
         #endregion
 
 
@@ -115,6 +163,12 @@ namespace App.Infrastructure.Repository.RequestAgg
         }
 
         
+
+
+
+
+
+
 
 
 

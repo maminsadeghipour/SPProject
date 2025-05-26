@@ -16,7 +16,15 @@ namespace App.Domain.Core.RequestAgg.Contracts.RequestContracts
 
         Task<List<ShowDetailsRequestDto>> GetAllRequestsWithDetails(CancellationToken cancellationToken);
 
-        Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken); 
+        Task<UpdateRequestDto> GetUpdateDtoById(int id, CancellationToken cancellationToken);
+
+        Task<List<ShowDetailsRequestDto>> GetRequestByCustomerId(int customerId, CancellationToken cancellationToken);
+
+        Task<ShowDetailBidsRequestDto> GetReequestWithBids(int requestId, int customerId, CancellationToken cancellationToken);
+
+        Task Update(Request request, CancellationToken cancellationToken);
+
+        Task<int?> GetRequestAcceptedBidId(int id, CancellationToken cancellationToken);
     }
 }
 

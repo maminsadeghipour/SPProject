@@ -27,9 +27,9 @@ namespace App.Infrastructure.DataAccess.Configuration.AdminAgg
 
             #region SeedData
 
-            builder.HasData(
-                new Admin() { Id = 1, Username = "admin", Password = "admin", CreatedAt = DateTime.Now}
-                );
+            //builder.HasData(
+            //    new Admin() { Id = 1, Username = "admin", Password = "admin", CreatedAt = DateTime.Now}
+            //    );
 
             #endregion
         }

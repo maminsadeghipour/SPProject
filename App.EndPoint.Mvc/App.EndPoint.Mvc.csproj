@@ -16,9 +16,14 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.1" />
     
     <None Remove="Views\Admin\" />
+    <None Remove="Views\Account\" />
+    <None Remove="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="wwwroot\requestimages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj">
@@ -40,5 +45,9 @@
     <ProjectReference Include="..\App.Infrastructure.RedisCacheService\App.Infrastructure.RedisCacheService.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\requestimages\" />
+    <Content Remove="wwwroot\requestimages\darby.jpeg" />
   </ItemGroup>
 </Project>

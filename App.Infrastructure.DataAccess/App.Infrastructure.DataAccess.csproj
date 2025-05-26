@@ -16,6 +16,7 @@
     <None Remove="Configuration\RequestAgg\" />
     <None Remove="Configuration\SkillServeAgg\" />
     <None Remove="Configuration\AdminAgg\" />
+    <None Remove="Configuration\IdentityAgg\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DatabaseContext\" />
@@ -27,18 +28,19 @@
     <Folder Include="Configuration\RequestAgg\" />
     <Folder Include="Configuration\SkillServeAgg\" />
     <Folder Include="Configuration\AdminAgg\" />
+    <Folder Include="Configuration\IdentityAgg\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />

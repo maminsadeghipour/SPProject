@@ -47,6 +47,13 @@
     <None Remove="CacheAgg\" />
     <None Remove="CacheAgg\Contracts\" />
     <None Remove="FeedBackAgg\DTOs\" />
+    <None Remove="IdentityAgg\" />
+    <None Remove="IdentityAgg\Entity\" />
+    <None Remove="IdentityAgg\Contracts\" />
+    <None Remove="IdentityAgg\DTOs\" />
+    <None Remove="CustomerAgg\DTOs\" />
+    <None Remove="AddressAgg\DTOs\" />
+    <None Remove="FeedBackAgg\ModelViews\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomerAgg\" />
@@ -89,5 +96,17 @@
     <Folder Include="CacheAgg\" />
     <Folder Include="CacheAgg\Contracts\" />
     <Folder Include="FeedBackAgg\DTOs\" />
+    <Folder Include="IdentityAgg\" />
+    <Folder Include="IdentityAgg\Entity\" />
+    <Folder Include="IdentityAgg\Contracts\" />
+    <Folder Include="IdentityAgg\DTOs\" />
+    <Folder Include="CustomerAgg\DTOs\" />
+    <Folder Include="AddressAgg\DTOs\" />
+    <Folder Include="FeedBackAgg\ModelViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
   </ItemGroup>
 </Project>

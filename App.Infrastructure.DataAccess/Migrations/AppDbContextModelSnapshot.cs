@@ -17,7 +17,7 @@ namespace App.Infrastructure.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -268,16 +268,6 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(7200),
-                            IsDeleted = false,
-                            Password = "admin",
-                            Username = "admin"
-                        });
                 });
 
             modelBuilder.Entity("App.Domain.Core.CustomerAgg.Entity.Customer", b =>
@@ -287,6 +277,9 @@ namespace App.Infrastructure.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -307,37 +300,26 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.Property<DateTime?>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
 
                     b.ToTable("Customers", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 471, DateTimeKind.Local).AddTicks(7910),
-                            FirstName = "Ali",
+                            Id = 4,
+                            ApplicationUserId = 4,
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 973, DateTimeKind.Local).AddTicks(6120),
+                            FirstName = "Maryam",
                             IsDeleted = false,
-                            LastName = "Alizadeh",
-                            Password = "1234",
-                            PhoneNumber = "09121234567",
-                            RegisteredAt = new DateTime(2024, 5, 17, 10, 8, 3, 471, DateTimeKind.Local).AddTicks(7870),
-                            Username = "Ali.Alizadeh"
+                            LastName = "Maryam",
+                            RegisteredAt = new DateTime(2024, 5, 24, 7, 53, 20, 973, DateTimeKind.Local).AddTicks(6070)
                         });
                 });
 
@@ -348,6 +330,9 @@ namespace App.Infrastructure.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BankAccount")
                         .IsRequired()
@@ -372,38 +357,38 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.Property<DateTime?>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
 
                     b.ToTable("Experts", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 2,
+                            ApplicationUserId = 2,
                             BankAccount = "6362141111223344",
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 472, DateTimeKind.Local).AddTicks(3690),
-                            FirstName = "Mohmad",
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 974, DateTimeKind.Local).AddTicks(2810),
+                            FirstName = "Ali",
                             IsDeleted = false,
-                            LastName = "Sadeghi",
-                            Password = "1234",
-                            PhoneNumber = "09123215476",
-                            RegisteredAt = new DateTime(2024, 5, 17, 10, 8, 3, 472, DateTimeKind.Local).AddTicks(3680),
-                            Username = "m.sadeghi"
+                            LastName = "Ali",
+                            RegisteredAt = new DateTime(2024, 5, 24, 7, 53, 20, 974, DateTimeKind.Local).AddTicks(2790)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ApplicationUserId = 3,
+                            BankAccount = "6362141111223355",
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 974, DateTimeKind.Local).AddTicks(2830),
+                            FirstName = "Sahal",
+                            IsDeleted = false,
+                            LastName = "Sahar",
+                            RegisteredAt = new DateTime(2024, 5, 24, 7, 53, 20, 974, DateTimeKind.Local).AddTicks(2810)
                         });
                 });
 
@@ -455,6 +440,144 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.HasIndex("RequestId");
 
                     b.ToTable("CustomerFeedbacks", (string)null);
+                });
+
+            modelBuilder.Entity("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "34eb570f-8960-4328-bb4d-1531969a3a3d",
+                            Email = "Admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGXlAp/INAcavbisgQMP4w1HoS4ZS/0FeGUivUCywWtDOwnLRmwYaoo3eg5hekKiag==",
+                            PhoneNumber = "09377507920",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "967b079b-e7f5-46af-9262-97de5d65941f",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0bfcc9de-5a03-4a5b-b774-89935d741890",
+                            Email = "Ali@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ALI@GMAIL.COM",
+                            NormalizedUserName = "ALI@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELWVoOJTrUgYoJDe4zsut0wfgIh2G3/TvBrgod0ZhhYlH4HBw+joig/LaV1DxbluFA==",
+                            PhoneNumber = "09377507920",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "77710c24-f1a0-4f08-b5b2-61c961d8a3c9",
+                            TwoFactorEnabled = false,
+                            UserName = "Ali@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7ee17c0a-01da-464f-bca2-ae32fdf05ad9",
+                            Email = "Sahar@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SAHAR@GMAIL.COM",
+                            NormalizedUserName = "SAHAR@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGX1x90f/dhyjN/GH4Do7sloAc/xDnkRAwNfGgObrGpuUbAQLQmcqm2vwhz9HZxRDA==",
+                            PhoneNumber = "09377507920",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "edc93947-e947-4b3d-bfff-46dcbf1d54c8",
+                            TwoFactorEnabled = false,
+                            UserName = "Sahar@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e3388030-ae23-46d7-8fc0-3d87da6582f3",
+                            Email = "Maryam@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MARYAM@GMAIL.COM",
+                            NormalizedUserName = "MARYAM@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAED5zMyAXSRdOW4cu/bJ7Tt/aKisNIZEVFo1J6hpgsrHGbu+KzIvUzyodC8mPcDR8CA==",
+                            PhoneNumber = "09377507920",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a57d47ad-fe56-4882-9f73-8299a56342b8",
+                            TwoFactorEnabled = false,
+                            UserName = "Maryam@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("App.Domain.Core.RequestAgg.Entity.Bid", b =>
@@ -511,11 +634,17 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.Property<int?>("AcceptedBidId")
                         .HasColumnType("int");
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DeadLine")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -540,6 +669,8 @@ namespace App.Infrastructure.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CustomerId");
 
@@ -622,7 +753,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2660),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4800),
                             Description = "نظافت منزل با بهترین امکانات",
                             IsDeleted = false,
                             MinWage = 400000,
@@ -632,7 +763,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4830),
                             Description = "قالی های خود را به ما بسپارید",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -642,7 +773,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4830),
                             Description = "سردته؟ با یه درخواست سیستم گرمایشتو درست کن",
                             IsDeleted = false,
                             MinWage = 500000,
@@ -652,7 +783,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4830),
                             Description = "خسته شدی از اینکه ساختمانت درست نیست راه حلش پیش ماست",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -662,7 +793,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 5,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2700),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4830),
                             Description = "دیگه نگران خراب شدن یخچالت نباش",
                             IsDeleted = false,
                             MinWage = 400000,
@@ -672,7 +803,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 6,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4840),
                             Description = "ماشین لباسشوییت لباساتو خوب تمیز نمیکنه ؟ درخواست بده",
                             IsDeleted = false,
                             MinWage = 300000,
@@ -682,7 +813,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 7,
                             CategoryId = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4840),
                             Description = "تعمیر کارا ماشینتو جواب کردن ؟ اینجا درستش کن ",
                             IsDeleted = false,
                             MinWage = 600000,
@@ -692,7 +823,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 8,
                             CategoryId = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4840),
                             Description = "با همسرت سره کثیفی ماشین دعواتون شده ؟ اشکال نداره ما براتون مشکلتونو حل میکنیم",
                             IsDeleted = false,
                             MinWage = 150000,
@@ -702,7 +833,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 9,
                             CategoryId = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2710),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4840),
                             Description = "دیگه اگه موبایلت درست کار نکنه چه جوری می خوای زندگی کنی",
                             IsDeleted = false,
                             MinWage = 600000,
@@ -712,7 +843,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 10,
                             CategoryId = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4860),
                             Description = "حوصله نداری تا مغازه بری ما میاییم پیشت",
                             IsDeleted = false,
                             MinWage = 500000,
@@ -722,7 +853,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 11,
                             CategoryId = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4860),
                             Description = "می خوای نقل مکان کنی ؟ ما برات  بسته  بندی  و انجام میدیم",
                             IsDeleted = false,
                             MinWage = 200000,
@@ -732,7 +863,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         {
                             Id = 12,
                             CategoryId = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(2720),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(4870),
                             Description = "می خوای نقل مکان کنی ؟ ما برات انجام میدیم",
                             IsDeleted = false,
                             MinWage = 700000,
@@ -775,7 +906,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5250),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7100),
                             Description = "ارئه خدمات مربوط به نظافت منزل و ...",
                             IsDeleted = false,
                             Title = "نظافت"
@@ -783,7 +914,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7120),
                             Description = "خدمات مربوط به ساختمان و..",
                             IsDeleted = false,
                             Title = "ساختمان"
@@ -791,7 +922,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7120),
                             Description = "تعمیرات یخچال و ...",
                             IsDeleted = false,
                             Title = "تعمیرات اشیا"
@@ -799,7 +930,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7120),
                             Description = "خدمات مربوط به خودرو تعمیرات و ...",
                             IsDeleted = false,
                             Title = "خودرو"
@@ -807,7 +938,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5270),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7120),
                             Description = "تعمیرات موبایل و تجهیزات الکترونیک",
                             IsDeleted = false,
                             Title = "الکترونیک"
@@ -815,7 +946,7 @@ namespace App.Infrastructure.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 5, 17, 10, 8, 3, 480, DateTimeKind.Local).AddTicks(5280),
+                            CreatedAt = new DateTime(2024, 5, 24, 7, 53, 20, 977, DateTimeKind.Local).AddTicks(7130),
                             Description = "خدمات مربوط به اسباب کشی ",
                             IsDeleted = false,
                             Title = "حمل و نقل"
@@ -837,6 +968,181 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.ToTable("ExpertSkillServe");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Expert",
+                            NormalizedName = "EXPERT"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("App.Domain.Core.AddressAgg.Entity.Address", b =>
                 {
                     b.HasOne("App.Domain.Core.AddressAgg.Entity.City", "City")
@@ -854,6 +1160,28 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.Navigation("City");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("App.Domain.Core.CustomerAgg.Entity.Customer", b =>
+                {
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", "ApplicationUser")
+                        .WithOne("Customer")
+                        .HasForeignKey("App.Domain.Core.CustomerAgg.Entity.Customer", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("App.Domain.Core.ExpertAgg.Entity.Expert", b =>
+                {
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", "ApplicationUser")
+                        .WithOne("Expert")
+                        .HasForeignKey("App.Domain.Core.ExpertAgg.Entity.Expert", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("App.Domain.Core.FeedBackAgg.Entity.CostumerFeedback", b =>
@@ -904,6 +1232,12 @@ namespace App.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("App.Domain.Core.RequestAgg.Entity.Request", b =>
                 {
+                    b.HasOne("App.Domain.Core.AddressAgg.Entity.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("App.Domain.Core.CustomerAgg.Entity.Customer", "Customer")
                         .WithMany("Requests")
                         .HasForeignKey("CustomerId")
@@ -915,6 +1249,8 @@ namespace App.Infrastructure.DataAccess.Migrations
                         .HasForeignKey("SkillServeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("Customer");
 
@@ -958,6 +1294,57 @@ namespace App.Infrastructure.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("App.Domain.Core.AddressAgg.Entity.City", b =>
                 {
                     b.Navigation("Addresses");
@@ -977,6 +1364,13 @@ namespace App.Infrastructure.DataAccess.Migrations
                     b.Navigation("Bids");
 
                     b.Navigation("CostumerFeedbacks");
+                });
+
+            modelBuilder.Entity("App.Domain.Core.IdentityAgg.Entity.ApplicationUser", b =>
+                {
+                    b.Navigation("Customer");
+
+                    b.Navigation("Expert");
                 });
 
             modelBuilder.Entity("App.Domain.Core.RequestAgg.Entity.Request", b =>

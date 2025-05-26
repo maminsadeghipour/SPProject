@@ -25,6 +25,9 @@ namespace App.Infrastructure.Repository.RequestAgg
         #region Impletantions
         public async Task<List<Bid>> GetAll(CancellationToken cancellationToken) => await _context.Bids.AsNoTracking().ToListAsync(cancellationToken);
 
+        public async Task<int> GetExpertIdById(int id, CancellationToken cancellationToken)
+            => await _context.Bids.Where(b => b.Id == id).Select(b => b.ExpertId).FirstAsync(cancellationToken);
+
         public async Task Add(Bid bid, CancellationToken cancellationToken)
         {
             await _context.Bids.AddAsync(bid,cancellationToken);
@@ -79,6 +82,9 @@ namespace App.Infrastructure.Repository.RequestAgg
                 return bid;
             throw new Exception($"Bid with id {id} did not found");
         }
+
+        
+        
 
         #endregion
     }

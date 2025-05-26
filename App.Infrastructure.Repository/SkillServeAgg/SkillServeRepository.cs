@@ -2,6 +2,7 @@
 using App.Domain.Core.SkillServeAgg.Contracts.SkillServeContracts;
 using App.Domain.Core.SkillServeAgg.DTOs;
 using App.Domain.Core.SkillServeAgg.Entity;
+using App.Domain.Core.SkillServeAgg.ModelViews;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -32,6 +33,15 @@ namespace App.Infrastructure.Repository.SkillServeAgg
 
         public async Task<int> Count(CancellationToken cancellationToken)
             => await _context.SkillServes.Where(s => !s.IsDeleted).CountAsync(cancellationToken);
+
+        public async Task<List<TitleSkillServeModelView>> GetSkillServesByCategoryId(int categoryId, CancellationToken cancellationToken)
+            => await _context.SkillServes.Where(s => s.CategoryId == categoryId)
+                            .Select(s => new TitleSkillServeModelView()
+                            {
+                                Id = s.Id,
+                                Title = s.Title,
+                                Description = s.Description                                
+                            }).ToListAsync(cancellationToken);
 
 
         public async Task Add(SkillServe skill, CancellationToken cancellationToken)
@@ -133,9 +143,6 @@ namespace App.Infrastructure.Repository.SkillServeAgg
         }
 
         
-        
-
-
 
 
         #endregion

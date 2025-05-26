@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using App.Domain.Core.FeedBackAgg.Entity;
+using App.Domain.Core.IdentityAgg.Entity;
 using App.Domain.Core.RequestAgg.Entity;
 using App.Domain.Core.SkillServeAgg.Entity;
 
@@ -13,13 +14,14 @@ namespace App.Domain.Core.ExpertAgg.Entity
 		}
 
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
         public string BankAccount { get; set; }
 
+
+        //public string PhoneNumber { get; set; }
+        //public string Username { get; set; }
+        //public string Password { get; set; }
 
         public DateTime RegisteredAt { get; set; }
 
@@ -36,10 +38,12 @@ namespace App.Domain.Core.ExpertAgg.Entity
         public List<SkillServe> SkillServes { get; set; }
 
         // One To Many
-        public List<Bid> Bids { get; set; }
-
-        // One To Many 
+        public List<Bid> Bids { get; set; }        
         public List<CostumerFeedback> CostumerFeedbacks { get; set; }
+
+        // One To One
+        public ApplicationUser ApplicationUser { get; set; }
+        public int ApplicationUserId { get; set; }
     }
 }
 

@@ -4,6 +4,7 @@ using App.Domain.Core.AdminAgg.Entity;
 using App.Domain.Core.CustomerAgg.Entity;
 using App.Domain.Core.ExpertAgg.Entity;
 using App.Domain.Core.FeedBackAgg.Entity;
+using App.Domain.Core.IdentityAgg.Entity;
 using App.Domain.Core.RequestAgg.Entity;
 using App.Domain.Core.SkillServeAgg.Entity;
 using App.Infrastructure.DataAccess.Configuration.AddressAgg;
@@ -11,21 +12,24 @@ using App.Infrastructure.DataAccess.Configuration.AdminAgg;
 using App.Infrastructure.DataAccess.Configuration.CustomerAgg;
 using App.Infrastructure.DataAccess.Configuration.ExpertAgg;
 using App.Infrastructure.DataAccess.Configuration.FeebackAgg;
+using App.Infrastructure.DataAccess.Configuration.IdentityAgg;
 using App.Infrastructure.DataAccess.Configuration.RequestAgg;
 using App.Infrastructure.DataAccess.Configuration.SkillServeAgg;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.DataAccess.DatabaseContext
 {
-	public class AppDbContext : DbContext
-	{
+	public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    {
 		public AppDbContext()
 		{
 		}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1,1433;Initial Catalog=SPProject;User ID=sa;Password=user@2023;TrustServerCertificate=True;Encrypt=True");
+            optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1,1433;Initial Catalog=SPProject2;User ID=sa;Password=user@2023;TrustServerCertificate=True;Encrypt=True");
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -43,6 +47,8 @@ namespace App.Infrastructure.DataAccess.DatabaseContext
             modelBuilder.ApplyConfiguration(new SkillServeConfiguration());
             modelBuilder.ApplyConfiguration(new SkillServeCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new AdminConfiguration());
+
+            ApplicationUserConfiguration.SeedUsers(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

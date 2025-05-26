@@ -25,13 +25,25 @@ using App.Domain.Core.FeedBackAgg.Contracts;
 using App.Infrastructure.Repository.FeebackAgg;
 using App.Domain.Service.FeebackAgg;
 using App.Domain.AppService.FeebackAgg;
+using App.Domain.Core.IdentityAgg.Entity;
+using Microsoft.AspNetCore.Identity;
+using App.Domain.Core.IdentityAgg.Contracts;
+using App.Domain.AppService.IdentityAgg;
+using App.Domain.Core.AddressAgg.Contracts.CityContract;
+using App.Infrastructure.Repository.AddressAgg;
+using App.Domain.Service.AddressAgg;
+using App.Domain.AppService.AddressAgg;
+using App.Domain.Core.AddressAgg.Contracts.AddressContract;
+using App.Domain.Core.RequestAgg.Contracts.BidContracts;
+using App.Domain.Core.RequestAgg.Contracts.RequestPictureContracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMemoryCache();
+
 builder.Services.AddControllersWithViews();
 
-#region Logg
+
+#region LoggConfigurations
 
 // Add SeriLog
 builder.Host.ConfigureLogging(loggingBuilder =>
@@ -49,18 +61,22 @@ builder.Host.ConfigureLogging(loggingBuilder =>
 
 #endregion
    
-
-#region DbContext
+#region DatabaseConfiguration
 builder.Services.AddDbContext<AppDbContext>();
 
 #endregion
 
+#region CacheConfigurations
 builder.Services.AddStackExchangeRedisCache(option =>
 {
     option.Configuration = "localhost:6379";
     option.InstanceName = "SPProjectCatalog_";
 
 });
+
+builder.Services.AddMemoryCache();
+
+#endregion
 
 #region IoC Containers
 
@@ -88,9 +104,47 @@ builder.Services.AddScoped<ICustomerFeedbackRepository, CustomerFeedbackReposito
 builder.Services.AddScoped<ICustomerFeedbackService, CustomerFeedbackService>();
 builder.Services.AddScoped<ICustomerFeedbackAppService, CustomerFeedbackAppService>();
 
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<ICityAppService, CityAppService>();
+
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IAddressAppService, AddressAppService>();
+
+builder.Services.AddScoped<IBidService, BidService>();
+builder.Services.AddScoped<IBidRepository, BidRepository>();
+
+builder.Services.AddScoped<IRequestPictureService, RequestPictureService>();
+
+
+
+
+
+
+builder.Services.AddScoped<IAccountAppServices, AccountAppServices>();
+
 builder.Services.AddScoped<IEnumService, EnumService>();
 
 builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+#endregion
+
+#region IdentityConfigurations
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>
+    (options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+    })
+    .AddRoles<IdentityRole<int>>()
+    .AddEntityFrameworkStores<AppDbContext>();
+    //.AddErrorDescriber<PersianIdentityErrorDescriber>();
 
 #endregion
 

@@ -1,0 +1,60 @@
+﻿@using App.Domain.Core.RequestAgg.DTOs
+@using App.Domain.Core.FeedBackAgg.ModelViews
+@model ShowDetailBidsRequestDto
+@{
+    Layout = "_AppLayout";
+    ViewBag.RequestId = Model.Id;
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-2">
+        جزئیات درخواست
+    </h4>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+        <div class="d-flex flex-column justify-content-center gap-2 gap-sm-0">
+            <h5 class="mb-1 mt-3 d-flex flex-wrap gap-2 align-items-end">
+                درخواست شماره @Model.Id عنوان : @Model.Title
+                <span class="badge bg-label-info">@Model.RequestState</span>
+            </h5>
+            <p class="text-body">تاریخ اتمام : @Model.DeadLine</p>
+
+        </div>
+        <div class="d-flex align-content-center flex-wrap gap-2">
+            <button class="btn btn-label-danger delete-order">حذف سفارش</button>
+        </div>
+    </div>
+
+    @if (Model.AcceptedBidId == null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="w-50">پیشنهاد</th>
+                    <th class="w-25">قیمت</th>
+                    <th class="w-25">تاریخ اتمام</th>
+                    <th>قبول کردن</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bid in Model.Bids)
+                {
+                    <tr>
+                        <th scope="row">@bid.Description</th>
+                        <td>@bid.Price</td>
+                        <td>@bid.FulfillmentDate</td>
+                        <td><a asp-controller="Customer" asp-action="AcceptBid" asp-route-requestId="@Model.Id" asp-route-bidId="@bid.Id">قبول کردن</a></td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    }
+</div>
+
+@if (Model.RequestState == App.Domain.Core.RequestAgg.Enum.RequestSate.WaitingForCustomerFeedback)
+{
+    @Html.Partial("_AddCustomerFeedbackPartial")
+}

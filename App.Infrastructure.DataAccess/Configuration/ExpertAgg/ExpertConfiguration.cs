@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Domain.Core.CustomerAgg.Entity;
 using App.Domain.Core.ExpertAgg.Entity;
+using App.Domain.Core.IdentityAgg.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,11 +21,12 @@ namespace App.Infrastructure.DataAccess.Configuration.ExpertAgg
 
             builder.Property(e => e.FirstName).IsRequired();
             builder.Property(e => e.LastName).IsRequired();
-            builder.Property(e => e.PhoneNumber).IsRequired();
-            builder.Property(e => e.Username).IsRequired();
-            builder.Property(e => e.Password).IsRequired();
             builder.Property(e => e.BankAccount).IsRequired();
             builder.Property(e => e.RegisteredAt).IsRequired();
+
+            //builder.Property(e => e.PhoneNumber).IsRequired();
+            //builder.Property(e => e.Username).IsRequired();
+            //builder.Property(e => e.Password).IsRequired();
 
             builder.Property(e => e.LastUpdatedAt).IsRequired(false);
             builder.Property(e => e.CreatedAt).IsRequired();
@@ -45,23 +47,35 @@ namespace App.Infrastructure.DataAccess.Configuration.ExpertAgg
                 .HasForeignKey(c=> c.ExpertId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.HasOne(e => e.ApplicationUser)
+                .WithOne(a => a.Expert)
+                .OnDelete(DeleteBehavior.NoAction);
+
             #region SeedData
 
             builder.HasData(
                 new Expert()
                 {
-                    Id = 1,
-                    FirstName = "Mohmad",
-                    LastName = "Sadeghi",
-                    Username = "m.sadeghi",
-                    Password = "1234",
+                    Id = 2,
+                    FirstName = "Ali",
+                    LastName = "Ali",                   
+                    RegisteredAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,                    
+                    BankAccount = "6362141111223344",
+                    ApplicationUserId = 2
+                },
+                new Expert()
+                {
+                    Id = 3,
+                    FirstName = "Sahal",
+                    LastName = "Sahar",
                     RegisteredAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
-                    PhoneNumber = "09123215476",
-                    BankAccount = "6362141111223344"
+                    BankAccount = "6362141111223355",
+                    ApplicationUserId = 3
                 }
                 );
-
+            
             #endregion
         }
     }

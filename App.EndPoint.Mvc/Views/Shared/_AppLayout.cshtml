@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>لیستئو</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/main-color.css" id="colors">
+
+    <link type="text/css" rel="stylesheet" href="~/dist/jalalidatepicker.min.css" />
+    
+
+</head>
+
+<body>
+
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header Container
+        ================================================== -->
+        <header id="header-container">
+
+            <!-- Header -->
+            <div id="header">
+                <div class="container">
+
+                    <!-- Left Side Content -->
+                    <div class="left-side">
+
+                        <!-- Logo -->
+                        <div id="logo">
+                            <a href="index.html"><img src="~/images/logo.png" alt=""></a>
+                        </div>
+
+                        <!-- Mobile Navigation -->
+                        <div class="mmenu-trigger">
+                            <button class="hamburger hamburger--collapse" type="button">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Main Navigation -->
+                        <nav id="navigation" class="style-1">
+                            <ul id="responsive">
+
+                                <li>
+                                    <a class="current" asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                                </li>
+
+
+                                <li>
+                                    <a href="#">پنل کاربری</a>
+                                    <ul>
+                                        <li><a href="dashboard.html">داشبورد</a></li>
+                                        <li><a href="dashboard-messages.html">پیام ها</a></li>
+                                        <li><a href="dashboard-bookings.html">رزرو ها</a></li>
+                                        <li><a href="dashboard-wallet.html">کیف پول</a></li>
+                                        <li><a href="dashboard-my-listings.html">آگهی های من</a></li>
+                                        <li><a href="dashboard-reviews.html">نظرات</a></li>
+                                        <li><a href="dashboard-bookmarks.html">نشانکها</a></li>
+                                        <li><a href="dashboard-add-listing.html">افزودن آگهی</a></li>
+                                        <li><a href="dashboard-my-profile.html">پروفایل من</a></li>
+                                        <li><a href="dashboard-invoice.html">صورتحساب</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#">صفحات</a>
+                                    <div class="mega-menu mobile-styles three-columns">
+
+                                        <div class="mega-menu-section">
+                                            <ul>
+                                                <li class="mega-menu-headline">صفحات #1</li>
+                                                <li><a href="pages-user-profile.html"><i class="sl sl-icon-user"></i> پروفایل کاربر</a></li>
+                                                <li><a href="pages-booking.html"><i class="sl sl-icon-check"></i> صفحه رزرو</a></li>
+                                                <li><a href="pages-add-listing.html"><i class="sl sl-icon-plus"></i> افزودن آگهی</a></li>
+                                                <li><a href="pages-blog.html"><i class="sl sl-icon-docs"></i> بلاگ</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mega-menu-section">
+                                            <ul>
+                                                <li class="mega-menu-headline">صفحات #2</li>
+                                                <li><a href="pages-contact.html"><i class="sl sl-icon-envelope-open"></i> تماس</a></li>
+                                                <li><a href="pages-coming-soon.html"><i class="sl sl-icon-hourglass"></i> به زودی</a></li>
+                                                <li><a href="pages-404.html"><i class="sl sl-icon-close"></i> صفحه 404</a></li>
+                                                <li><a href="pages-masonry-filtering.html"><i class="sl sl-icon-equalizer"></i> ساختار فیلتر</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mega-menu-section">
+                                            <ul>
+                                                <li class="mega-menu-headline">و دیگر</li>
+                                                <li><a href="pages-elements.html"><i class="sl sl-icon-settings"></i> المنت ها</a></li>
+                                                <li><a href="pages-pricing-tables.html"><i class="sl sl-icon-tag"></i> جداول قیمت</a></li>
+                                                <li><a href="pages-typography.html"><i class="sl sl-icon-pencil"></i> تایپوگرافی</a></li>
+                                                <li><a href="pages-icons.html"><i class="sl sl-icon-diamond"></i> آیکن ها</a></li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <!-- Main Navigation / End -->
+
+                    </div>
+
+
+                    <partial name="_LoginPartial" />
+
+
+
+                </div>
+            </div>
+            <!-- Header / End -->
+
+        </header>
+        <div class="clearfix"></div>
+        <!-- Header Container / End -->
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+
+    </div>
+
+    <script type="text/javascript" src="~/scripts/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="~/scripts/mmenu.min.js"></script>
+    <script type="text/javascript" src="~/scripts/chosen.min.js"></script>
+    <script type="text/javascript" src="~/scripts/slick.min.js"></script>
+    <script type="text/javascript" src="~/scripts/rangeslider.min.js"></script>
+    <script type="text/javascript" src="~/scripts/magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/scripts/waypoints.min.js"></script>
+    <script type="text/javascript" src="~/scripts/counterup.min.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/scripts/tooltips.min.js"></script>
+    <script type="text/javascript" src="~/scripts/custom.js"></script>
+
+
+    <script type="text/javascript" src="~/dist/jalalidatepicker.min.js"></script>
+
+</body>
+@await RenderSectionAsync("Scripts", required: false)
+</html>

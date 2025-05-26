@@ -66,7 +66,10 @@ namespace App.Domain.Service.SkillServeAgg
 
         public async Task DeleteById(int id, CancellationToken cancellationToken)
             => await _repo.DeleteById(id, cancellationToken);
-        
+
+        public async Task<List<TitleSkillServeModelView>> GetSkillServesByCategoryId(int categoryId, CancellationToken cancellationToken)
+            => await _repo.GetSkillServesByCategoryId(categoryId, cancellationToken);
+
 
         #endregion
 

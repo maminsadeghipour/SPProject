@@ -1,0 +1,56 @@
+﻿@using App.Domain.Core.SkillServeAgg.ModelViews
+@model List<TitleSkillServeModelView>
+@{
+    Layout = "_AppLayout";
+}
+
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2> خدمات</h2>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="col-lg-9 col-md-8 padding-right-30">
+
+        <div class="row">
+
+            @foreach (var skillServe in Model)
+            {
+
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="listing-item-container list-layout">
+                        <a asp-controller="Customer" asp-action="AddRequest" asp-route-skillServeId="@skillServe.Id" class="listing-item">
+
+                            <div class="listing-item-content">
+
+                                <div class="listing-item-inner">
+                                    <h3>@skillServe.Title</h3>
+                                    <span>@skillServe.Description</span>
+
+                                </div>
+                                
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+
+            }
+
+
+
+        </div>
+
+    </div>
+
+</div>

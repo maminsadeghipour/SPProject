@@ -6,7 +6,7 @@ namespace App.Domain.Core.FeedBackAgg.Contracts
 {
 	public interface ICustomerFeedbackRepository
 	{
-        Task Add(CostumerFeedback feeback,CancellationToken cancellationToken);
+        Task Add(AddCustomerFeedbackDto feeback,CancellationToken cancellationToken);
         Task<List<CostumerFeedback>> GetAll(CancellationToken cancellationToken);
         Task<CostumerFeedback> GetById(int id, CancellationToken cancellationToken);
         Task Update(CostumerFeedback feedback, CancellationToken cancellationToken);

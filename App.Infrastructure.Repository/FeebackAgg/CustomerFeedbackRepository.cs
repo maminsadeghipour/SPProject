@@ -34,8 +34,8 @@ namespace App.Infrastructure.Repository.FeebackAgg
                 {
                     Id = f.Id,
                     Description = f.Description,
-                    CustomerName = f.Customer.Username,
-                    ExpertName = f.Expert.Username,
+                    CustomerName = f.Customer.FirstName + f.Customer.LastName,
+                    ExpertName = f.Expert.FirstName + f.Expert.LastName,
                     Rate = f.Rate,
                     SkillServeName = f.Request.SkillServe.Title,
                     IsAcceptedByAdmin = f.IsAcceptedByAdmin
@@ -43,10 +43,29 @@ namespace App.Infrastructure.Repository.FeebackAgg
                 ).ToListAsync(cancellationToken);
 
 
-        public async Task Add(CostumerFeedback feeback, CancellationToken cancellationToken)
+        public async Task Add(AddCustomerFeedbackDto feeback, CancellationToken cancellationToken)
         {
-            await _context.CostumerFeedbacks.AddAsync(feeback,cancellationToken);
+            var feebackToAdd = new CostumerFeedback()
+            {
+                CustomerId = feeback.CustomerId,
+                Description = feeback.Description,
+                CreatedAt = feeback.CreatedAt,
+                ExpertId = feeback.ExpertId,
+                Rate = feeback.Rate,
+                IsAcceptedByAdmin = feeback.IsAcceptedByAdmin,
+                RequestId = feeback.RequestId
+            };
+            try
+            {
+            await _context.CostumerFeedbacks.AddAsync(feebackToAdd,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
         }
 
         public async Task DeleteById(int id, CancellationToken cancellationToken)

@@ -1,0 +1,70 @@
+﻿@using App.Domain.Core.CustomerAgg.DTOs
+@model ProfileCustomerDto
+@{
+    Layout = "_AppLayout";
+
+}
+<div class="row">
+
+    <!-- Profile -->
+    <div class="col-lg-6 col-md-12">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray">جزئیات مشخصات</h4>
+            <div class="dashboard-list-box-static">
+
+
+                <!-- Details -->
+                <div class="my-profile">
+
+                    <label>نام شما</label>
+                    <input readonly value="@Model.FirstName" type="text">
+
+                    <label>نام  خانوادگی شما</label>
+                    <input readonly value="@Model.LastName" type="text">
+
+                    <label>تلفن</label>
+                    <input readonly value="@Model.PhoneNumber" type="text">
+
+                    <label>نام کاربری</label>
+                    <input readonly value="@Model.Username" type="text">
+
+                    <label>تعداد درخواست</label>
+                    <input readonly value="@Model.NumberOfRequests" type="text">
+
+                    <label>تاریخ ثبت نام</label>
+                    <input readonly value="@Model.RegisteredAt" type="text">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <h4 >آدرس ها</h4>
+
+        <table class="table">
+            <thead>
+                <tr>                    
+                    <th scope="col">عنوان</th>
+                    <th scope="col">خیابان</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach(var address in Model.Addresses)
+{
+                <tr>
+                    <th>@address.Title</th>
+                    <td>@address.Street</td>
+                    
+                </tr>
+
+}
+                
+            </tbody>
+        </table>
+
+        <a asp-controller="Customer" asp-action="AddAddress" class="button preview" >اضافه کردن آدرس</a>
+    </div>
+
+</div>

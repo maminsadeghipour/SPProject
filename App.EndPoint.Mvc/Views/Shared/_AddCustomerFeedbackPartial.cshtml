@@ -1,0 +1,28 @@
+﻿@using App.Domain.Core.FeedBackAgg.ModelViews
+
+@{
+    var requestId = ViewBag.RequestId;
+}
+<h3>اضافه کردن نظر</h3>
+
+
+<form asp-controller="Customer" asp-action="AddFeedBack" method="post">
+
+    <div class="form">
+        <label for="Description"></label>
+        <textarea class="WYSIWYG" cols="40" rows="3" id="summary" name="Description"></textarea>
+    </div>
+
+    <div class="form">
+        <label for="Rate"></label>
+        <input  class="form-control" type="number" name="Rate">
+    </div>
+
+    <div hidden class="mb-3">
+        <label for="RequestId" class="form-label"></label>
+        <input readonly class="form-control" type="number" name="RequestId" value="@requestId">
+    </div>
+
+    <button  type="submit" class="button preview">اضافه کردن</button>
+
+</form>

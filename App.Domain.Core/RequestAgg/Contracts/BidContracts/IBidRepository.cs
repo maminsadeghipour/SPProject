@@ -11,6 +11,8 @@ namespace App.Domain.Core.RequestAgg.Contracts.BidContracts
         Task<Bid> GetById(int id, CancellationToken cancellationToken);
         Task Update(Bid bid, CancellationToken cancellationToken);
         Task DeleteById(int id, CancellationToken cancellationToken);
+
+        Task<int> GetExpertIdById(int id, CancellationToken cancellationToken);
     }
 }
 

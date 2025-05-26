@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Domain.Core.FeedBackAgg.Contracts;
 using App.Domain.Core.FeedBackAgg.DTOs;
+using App.Domain.Core.FeedBackAgg.ModelViews;
 
 namespace App.Domain.AppService.FeebackAgg
 {
@@ -16,6 +17,8 @@ namespace App.Domain.AppService.FeebackAgg
             _customerFeedbackService = customerFeedbackService;
         }
 
+       
+
         #endregion
 
         #region Implementations
@@ -24,6 +27,9 @@ namespace App.Domain.AppService.FeebackAgg
 
         public async Task UpdateIsAcceptedByAdmin(int id, bool isAccepted, CancellationToken cancellationToken)
             => await _customerFeedbackService.UpdateIsAcceptedByAdmin(id, isAccepted, cancellationToken);
+
+        public async Task Add(int applicationUser, AddCustomerFeedbackModelView feeback, CancellationToken cancellationToken)
+            => await _customerFeedbackService.Add(applicationUser, feeback, cancellationToken);
         #endregion
     }
 }

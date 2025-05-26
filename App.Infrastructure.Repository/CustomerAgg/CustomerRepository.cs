@@ -1,5 +1,7 @@
 ﻿using System;
+using App.Domain.Core.AddressAgg.Entity;
 using App.Domain.Core.CustomerAgg.Contracts.CustomerContracts;
+using App.Domain.Core.CustomerAgg.DTOs;
 using App.Domain.Core.CustomerAgg.Entity;
 using App.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +30,10 @@ namespace App.Infrastructure.Repository.CustomerAgg
 
         public async Task<int> Count(CancellationToken cancellationToken)
             => await _context.Customers.Where(c => !c.IsDeleted).CountAsync(cancellationToken);
-        
+
+        public async Task<int> GetIdByApplicationUserId(int applicationUserId, CancellationToken cancellationToken)
+            => await _context.Customers.Where(c => c.ApplicationUserId == applicationUserId)
+                                    .Select(c => c.Id).FirstOrDefaultAsync(cancellationToken);
 
         public async Task Add(Customer customer, CancellationToken cancellationToken)
         {
@@ -64,6 +69,23 @@ namespace App.Infrastructure.Repository.CustomerAgg
         }
 
 
+        public async Task<ProfileCustomerDto> GetProfileById(int applicationUserId, CancellationToken cancellationToken)
+            => await _context.Customers.Where(c => c.ApplicationUserId == applicationUserId)
+            .Select(c =>
+            new ProfileCustomerDto()
+            {
+                Id = c.Id,
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                RegisteredAt = c.RegisteredAt,
+                Addresses = c.Addresses,
+                NumberOfRequests = c.Requests.Count(),
+                PhoneNumber = c.ApplicationUser.PhoneNumber,
+                Username = c.ApplicationUser.UserName
+            }
+            )
+            .FirstAsync(cancellationToken);
+
         #endregion
 
         #region Privates
@@ -76,7 +98,14 @@ namespace App.Infrastructure.Repository.CustomerAgg
 
         }
 
-        
+        public async Task<List<Address>> GetCustomerAddressByApplicationUserId(int applicationUserId, CancellationToken cancellationToken)
+            => await _context.Customers.Where(c => c.ApplicationUserId == applicationUserId)
+                                .Select(c => c.Addresses).FirstAsync(cancellationToken);
+
+
+
+
+
 
         #endregion
     }

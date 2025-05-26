@@ -33,7 +33,7 @@ namespace App.Infrastructure.DataAccess.Configuration.FeebackAgg
 
             builder.HasOne(c => c.Customer)
                 .WithMany(cu => cu.CostumerFeedbacks)
-                .HasForeignKey(c => c.ExpertId)
+                .HasForeignKey(c => c.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(c => c.Request);

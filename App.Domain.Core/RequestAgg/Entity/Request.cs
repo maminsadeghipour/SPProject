@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using App.Domain.Core.AddressAgg.Entity;
 using App.Domain.Core.CustomerAgg.Entity;
 using App.Domain.Core.RequestAgg.Enum;
 using App.Domain.Core.SkillServeAgg.Entity;
@@ -16,7 +17,10 @@ namespace App.Domain.Core.RequestAgg.Entity
         public string Title { get; set; }
         public string Description { get; set; }
         public RequestSate RequestState { get; set; }
-        
+        public DateTime DeadLine { get; set; }
+
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
 
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
@@ -26,6 +30,7 @@ namespace App.Domain.Core.RequestAgg.Entity
         [AllowNull]
         public int? AcceptedBidId { get; set; }
 
+        
 
         // One To Many
         public List<RequestPicture> Pictures { get; set; }
